@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#08090d">
-<title>NEON CAM — Kamera HD</title>
+<title>CAMERA SENDY — Kamera HD</title>
 <style>
 :root{--bg:#08090d;--panel:#11131b;--line:#252938;--text:#f5f7ff;--muted:#9ba3b7;--cyan:#64f5ff;--pink:#d77bff;--red:#ff4667}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#22213b 0%,#0b0c12 43%,var(--bg) 75%);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
@@ -35,13 +35,19 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
 </style>
 </head>
 <body>
-<header><div><div class="brand">NEON <span>CAM</span></div><div class="sub">HD PHOTO • VIDEO • AUDIO</div></div><div class="pill"><span id="liveDot" class="dot"></span><span id="camState">KAMERA NONAKTIF</span></div></header>
+<header><div><div class="brand">CAMERA <span>SENDY</span></div><div class="sub">HD PHOTO • VIDEO • AUDIO</div></div><div class="pill"><span id="liveDot" class="dot"></span><span id="camState">KAMERA NONAKTIF</span></div></header>
 <main>
  <section class="preview-wrap">
   <video id="preview" autoplay playsinline muted></video>
-  <div class="overlay"><div class="topline"><span class="pill" id="qualityBadge">HD READY</span><span class="pill"><span id="recDot" class="dot"></span><span id="timer">00:00</span></span></div><div class="bottomline"><span class="pill" id="filterBadge">NORMAL</span><span class="pill">NEON CAM</span></div></div>
+  <div class="overlay"><div class="topline"><span class="pill" id="qualityBadge">HD READY</span><span class="pill"><span id="recDot" class="dot"></span><span id="timer">00:00</span></span></div><div class="bottomline"><span class="pill" id="filterBadge">NORMAL</span><span class="pill">CAMERA SENDY</span></div></div>
  </section>
- <div class="status" id="status" role="status">Tekan “Aktifkan Kamera”, lalu izinkan akses kamera dan mikrofon.</div>
+ <div class="status" id="status" role="status">Memeriksa izin kamera…</div>
+ <div id="permissionBox" class="panel" style="margin-top:8px;border-color:#31505a">
+  <h2>🔐 Izin kamera & mikrofon</h2>
+  <p id="permissionText" style="margin:0 0 12px;color:#c4cadb;font-size:13px">CAMERA SENDY akan meminta izin kamera dan mikrofon agar foto, video, dan suara dapat digunakan. Browser akan menampilkan dialog izin resmi.</p>
+  <button id="permissionBtn" class="photo" style="width:100%">Izinkan Kamera & Mikrofon</button>
+  <p class="hint">Jika dialog tidak muncul, periksa ikon gembok/pengaturan situs dan pastikan halaman dibuka lewat HTTPS atau localhost.</p>
+ </div>
  <div class="actions">
   <button id="startBtn" class="action photo">◉ Aktifkan Kamera</button>
   <button id="photoBtn" class="action" disabled>◎ Ambil Foto</button>
@@ -67,9 +73,9 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
   <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px"><h2 style="margin:0">Hasil foto & video</h2><button id="clearBtn" class="smallbtn">Kosongkan</button></div>
   <div id="gallery"><div class="item full"><div class="item-info" style="color:var(--muted)">Belum ada hasil. Foto atau video yang dibuat akan muncul di sini dengan tombol download.</div></div></div>
  </section>
- <p class="hint">Catatan: suara video direkam melalui mikrofon perangkat. Pastikan izin mikrofon aktif dan gunakan HTTPS atau localhost; akses kamera biasanya tidak berjalan dari halaman HTTP biasa. Untuk merekam audio, suara pratinjau dibisukan agar tidak terjadi gema.</p>
+ <p class="hint">Kompatibilitas: dibuat dengan API web standar untuk Android, iOS, tablet, dan komputer modern yang mendukung kamera. Tidak ada satu file HTML yang dapat menjamin akses pada semua browser atau sistem operasi; izin, HTTPS, format video, dan fitur perangkat tetap berlaku. Catatan: suara video direkam melalui mikrofon perangkat. Pastikan izin mikrofon aktif dan gunakan HTTPS atau localhost; akses kamera biasanya tidak berjalan dari halaman HTTP biasa. Untuk merekam audio, suara pratinjau dibisukan agar tidak terjadi gema.</p>
 </main>
-<footer>NEON CAM · Kamera browser dengan efek visual</footer>
+<footer>CAMERA SENDY · Kamera browser dengan efek visual</footer>
 <script>
 const $=s=>document.querySelector(s), preview=$('#preview'), statusEl=$('#status');
 let stream=null, recorder=null, chunks=[], currentFilter='none', isRecording=false, startedAt=0, timerLoop=null, itemCount=0;
@@ -86,7 +92,11 @@ function getConstraints(){
  return {audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video};
 }
 async function startCamera(){
- if(!navigator.mediaDevices?.getUserMedia){say('Browser tidak mendukung kamera. Buka halaman melalui HTTPS dan gunakan browser modern.');return}
+ if(!navigator.mediaDevices?.getUserMedia){
+  say('Browser tidak mengizinkan akses kamera pada halaman ini. Gunakan HTTPS/localhost dan browser yang mendukung kamera.');
+  $('#permissionText').textContent='Akses kamera tidak tersedia di konteks ini. Buka situs melalui HTTPS atau localhost, lalu coba lagi.';
+  return
+ }
  try{
   if(stream) stopCamera(false);
   say('Meminta izin kamera dan mikrofon…');
@@ -96,9 +106,16 @@ async function startCamera(){
   $('#photoBtn').disabled=false;$('#recordBtn').disabled=false;$('#startBtn').textContent='↻ Mulai Ulang';
   const tr=stream.getVideoTracks()[0], settings=tr.getSettings();
   $('#qualityBadge').textContent=(settings.width||'?')+'×'+(settings.height||'?');
+  $('#permissionText').textContent='Izin diberikan. Kamera dan mikrofon siap digunakan.';
+  $('#permissionBox').style.borderColor='#285e46';
+  $('#permissionBtn').textContent='Izin Aktif ✓';
   say('Kamera aktif. Resolusi aktual: '+(settings.width||'?')+' × '+(settings.height||'?')+'.');
   applyZoom();
- }catch(e){say('Kamera tidak dapat diaktifkan: '+(e.name==='NotAllowedError'?'izin kamera/mikrofon ditolak. Izinkan lewat pengaturan situs.':e.name==='NotFoundError'?'kamera atau mikrofon tidak ditemukan.':e.message))}
+ }catch(e){
+  const msg=e.name==='NotAllowedError'?'Izin kamera/mikrofon ditolak atau diblokir. Buka pengaturan situs di browser, ubah Kamera dan Mikrofon menjadi Izinkan, lalu coba lagi.':e.name==='NotFoundError'?'Kamera atau mikrofon tidak ditemukan pada perangkat ini.':e.name==='NotReadableError'?'Kamera sedang digunakan aplikasi lain. Tutup aplikasi tersebut lalu coba lagi.':e.message;
+  say('Kamera tidak dapat diaktifkan: '+msg);
+  $('#permissionText').textContent=msg;
+ }
 }
 function stopCamera(show=true){
  if(isRecording) stopRecording();
@@ -141,7 +158,7 @@ function takePhoto(){
  if(!stream||!preview.videoWidth){say('Aktifkan kamera terlebih dahulu.');return}
  const canvas=drawFrame();
  canvas.toBlob(blob=>{if(!blob){say('Gagal membuat foto.');return}
-  const url=URL.createObjectURL(blob),name='NEON-CAM-FOTO-'+Date.now()+'.jpg';
+  const url=URL.createObjectURL(blob),name='CAMERA-SENDY-FOTO-'+Date.now()+'.jpg';
   addItem(blob,'image',name,url);say('Foto berhasil dibuat. Tekan Download Foto untuk menyimpannya.');
  },'image/jpeg',.96);
 }
@@ -158,7 +175,7 @@ function startRecording(){
  recorder.onerror=()=>say('Terjadi kesalahan saat merekam.');
  recorder.onstop=()=>{
   const blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'}),url=URL.createObjectURL(blob);
-  const ext=blob.type.includes('mp4')?'mp4':'webm',name='NEON-CAM-VIDEO-'+Date.now()+'.'+ext;
+  const ext=blob.type.includes('mp4')?'mp4':'webm',name='CAMERA-SENDY-VIDEO-'+Date.now()+'.'+ext;
   addItem(blob,'video',name,url);say('Video selesai direkam. Tekan Download Video untuk menyimpan file.');
  };
  recorder.start(250);isRecording=true;startedAt=Date.now();
@@ -173,6 +190,10 @@ function stopRecording(){
  $('#recDot').classList.remove('live');$('#photoBtn').disabled=!stream;$('#timer').textContent='00:00';
 }
 $('#startBtn').addEventListener('click',startCamera);
+$('#permissionBtn').addEventListener('click',startCamera);
+// Request browser permission when the page opens. Browsers may require a secure
+// context or a user gesture; the visible button remains as a reliable fallback.
+window.addEventListener('DOMContentLoaded',()=>{startCamera()});
 $('#photoBtn').addEventListener('click',takePhoto);
 $('#recordBtn').addEventListener('click',()=>isRecording?stopRecording():startRecording());
 document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>applyFilter(b.dataset.filter)));
