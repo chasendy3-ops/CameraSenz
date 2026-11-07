@@ -20,9 +20,11 @@ main{max-width:900px;margin:auto;padding:8px 14px 30px}.preview-wrap{position:re
 .status{color:var(--muted);font-size:13px;min-height:20px;margin:10px 3px}
 .panel{margin-top:14px;padding:15px;border:1px solid var(--line);background:linear-gradient(145deg,#151722e8,#0e1017e8);border-radius:20px;box-shadow:0 8px 35px #0004}
 h2{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#d8ddf2;margin:0 0 12px}
-.filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.filter-select-wrap{display:grid;grid-template-columns:1fr;gap:8px}
 button,select,input{font:inherit}button{color:var(--text);background:#1b1e2a;border:1px solid #34394b;border-radius:13px;padding:11px 10px;cursor:pointer;transition:.15s}
-button:active{transform:scale(.98)}button:disabled{opacity:.4;cursor:not-allowed}.filter.active{border-color:var(--cyan);background:#183039;box-shadow:0 0 14px #64f5ff20}.filter{font-size:12px;padding:10px 5px}
+button:active{transform:scale(.98)}button:disabled{opacity:.4;cursor:not-allowed}
+.filter-select{width:100%;padding:14px;border-color:#3c6070;background:linear-gradient(135deg,#111923,#0b0d13);box-shadow:0 0 16px #64f5ff12;font-weight:700}
+
 .controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
 select,input[type=range]{width:100%}select{background:#0b0d13;color:var(--text);border:1px solid #34394b;border-radius:11px;padding:11px}
@@ -31,7 +33,7 @@ select,input[type=range]{width:100%}select{background:#0b0d13;color:var(--text);
 .action{min-height:58px;font-weight:750}.photo{border-color:#64f5ff80;background:linear-gradient(135deg,#16434b,#17202c);box-shadow:0 0 18px #64f5ff18}.record{border-color:#ff466780;background:linear-gradient(135deg,#48182a,#20131d)}.recording{background:#7b1934;box-shadow:0 0 22px #ff466750}
 #gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{border:1px solid #2c3040;border-radius:14px;overflow:hidden;background:#0a0b10}.item img,.item video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#000}.item-info{padding:9px}.item-info strong{display:block;font-size:12px;overflow-wrap:anywhere}.item-info a{display:inline-block;margin-top:7px;color:var(--cyan);font-size:12px;text-decoration:none}.hint{color:var(--muted);font-size:12px;margin:10px 2px 0}.full{grid-column:1/-1}.smallbtn{padding:8px 10px;font-size:12px}
 footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
-@media(min-width:700px){.filters{grid-template-columns:repeat(8,minmax(0,1fr))}#gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.controls{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:700px){#gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.controls{grid-template-columns:repeat(4,minmax(0,1fr))}.filter-select-wrap{grid-template-columns:1fr auto;align-items:center}.filter-select-wrap .hint{margin:0}}
 </style>
 </head>
 <body>
@@ -55,8 +57,26 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
  </div>
  <section class="panel">
   <h2>Filter kamera</h2>
-  <div class="filters">
-   <button class="filter active" data-filter="none">Normal</button><button class="filter" data-filter="vivid">Vivid</button><button class="filter" data-filter="mono">B&W</button><button class="filter" data-filter="warm">Warm</button><button class="filter" data-filter="cool">Cool</button><button class="filter" data-filter="cinema">Cinema</button><button class="filter" data-filter="dream">Dream</button><button class="filter" data-filter="noir">Noir</button>
+  <div class="filter-select-wrap">
+   <select id="filterSelect" class="filter-select" aria-label="Pilih filter kamera">
+    <option value="none">Normal — warna asli</option>
+    <option value="auto">Otomatis — cerah & seimbang</option>
+    <option value="warm">Hangat — golden tone</option>
+    <option value="cinematic2">Cinematic V2 — film look</option>
+    <option value="vibes">Vibes — warna hidup</option>
+    <option value="vivid">Vivid — warna tajam</option>
+    <option value="soft">Soft Glow — lembut</option>
+    <option value="portrait">Portrait — natural</option>
+    <option value="golden">Golden Hour — keemasan</option>
+    <option value="pastel">Pastel — warna lembut</option>
+    <option value="vintage">Vintage — retro</option>
+    <option value="cool">Dingin — cool tone</option>
+    <option value="mono">Hitam Putih</option>
+    <option value="noir">Noir — kontras dramatis</option>
+    <option value="dream">Dream — dreamy</option>
+    <option value="cinema">Cinema — moody</option>
+   </select>
+   <div class="hint">Filter diterapkan ke pratinjau, foto, dan video yang direkam.</div>
   </div>
  </section>
  <section class="panel">
@@ -67,7 +87,7 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
    <div><label for="zoom">Zoom digital</label><div class="range-row"><input id="zoom" type="range" min="1" max="3" value="1" step=".1"><output id="zoomOut">1.0×</output></div></div>
    <div><label for="brightness">Kecerahan</label><div class="range-row"><input id="brightness" type="range" min="70" max="140" value="100"><output id="brightOut">100%</output></div></div>
   </div>
-  <p class="hint">Kualitas akhir bergantung pada kamera, pencahayaan, browser, dan perangkat. Filter serta zoom digital dapat mengubah tampilan; keduanya tidak menambah detail optik asli.</p>
+  <p class="hint">Kualitas akhir bergantung pada kamera, pencahayaan, browser, dan perangkat. Foto disimpan dengan kualitas JPEG tinggi. Rekaman video memakai filter yang menyatu ke gambar dan dibatasi hingga Full HD/30 FPS agar lebih ringan; hasil tetap bergantung pada perangkat.</p>
  </section>
  <section class="panel">
   <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px"><h2 style="margin:0">Hasil foto & video</h2><button id="clearBtn" class="smallbtn">Kosongkan</button></div>
@@ -79,16 +99,29 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
 <script>
 const $=s=>document.querySelector(s), preview=$('#preview'), statusEl=$('#status');
 let stream=null, recorder=null, chunks=[], currentFilter='none', isRecording=false, startedAt=0, timerLoop=null, itemCount=0;
+let recordingCanvas=null, recordingCtx=null, recordingFrame=0, recordingCanvasStream=null;
 const filters={
- none:'none',vivid:'saturate(1.45) contrast(1.08)',mono:'grayscale(1) contrast(1.12)',
- warm:'sepia(.28) saturate(1.2) hue-rotate(-8deg)',cool:'saturate(1.08) hue-rotate(12deg) brightness(1.03)',
- cinema:'contrast(1.2) saturate(.82) sepia(.12)',dream:'brightness(1.08) saturate(1.2) blur(.25px)',
- noir:'grayscale(1) contrast(1.45) brightness(.85)'
+ none:'none',
+ auto:'contrast(1.04) saturate(1.08) brightness(1.025)',
+ warm:'sepia(.22) saturate(1.24) hue-rotate(-7deg) contrast(1.04)',
+ cinematic2:'contrast(1.18) saturate(.88) sepia(.09) brightness(.98)',
+ vibes:'saturate(1.55) contrast(1.08) hue-rotate(-4deg)',
+ vivid:'saturate(1.42) contrast(1.09)',
+ soft:'brightness(1.045) saturate(1.12) contrast(.96)',
+ portrait:'saturate(1.08) contrast(1.025) brightness(1.015)',
+ golden:'sepia(.32) saturate(1.28) hue-rotate(-12deg) brightness(1.04)',
+ pastel:'saturate(.78) contrast(.92) brightness(1.07)',
+ vintage:'sepia(.3) saturate(.78) contrast(1.08)',
+ cool:'saturate(1.08) hue-rotate(12deg) brightness(1.03)',
+ mono:'grayscale(1) contrast(1.12)',
+ noir:'grayscale(1) contrast(1.45) brightness(.85)',
+ dream:'brightness(1.08) saturate(1.2)',
+ cinema:'contrast(1.2) saturate(.82) sepia(.12)'
 };
 function say(t){statusEl.textContent=t}
 function getConstraints(){
  const mode=$('#resolution').value;
- let video={facingMode:{ideal:$('#cameraSelect').value},width:{ideal:mode==='hd'?1280:mode==='fullhd'?1920:3840},height:{ideal:mode==='hd'?720:mode==='fullhd'?1080:2160},frameRate:{ideal:30,max:60}};
+ let video={facingMode:{ideal:$('#cameraSelect').value},width:{ideal:mode==='hd'?1280:mode==='fullhd'?1920:3840},height:{ideal:mode==='hd'?720:mode==='fullhd'?1080:2160},frameRate:{ideal:30,max:30}};
  return {audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video};
 }
 async function startCamera(){
@@ -129,14 +162,17 @@ function applyZoom(){
  preview.style.transform='scaleX('+( $('#cameraSelect').value==='user' ? '-1':'1')+') scale('+z+')';
 }
 function applyFilter(f){
- currentFilter=f;preview.style.filter=filters[f]+' brightness('+($('#brightness').value/100)+')';
- $('#filterBadge').textContent=f.toUpperCase();
- document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.dataset.filter===f));
+ currentFilter=filters[f]!==undefined?f:'none';
+ preview.style.filter=filters[currentFilter]+' brightness('+($('#brightness').value/100)+')';
+ const option=$('#filterSelect').querySelector('option[value="'+currentFilter+'"]');
+ $('#filterBadge').textContent=option?option.textContent.split(' — ')[0].toUpperCase():currentFilter.toUpperCase();
+ $('#filterSelect').value=currentFilter;
 }
 function drawFrame(){
  const w=preview.videoWidth||1280,h=preview.videoHeight||720;
  const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
- const c=canvas.getContext('2d');
+ const c=canvas.getContext('2d',{alpha:false});
+ c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';
  // Mirror the selfie preview in the exported image as well.
  const mirror=$('#cameraSelect').value==='user';
  c.save(); if(mirror){c.translate(w,0);c.scale(-1,1)}
@@ -160,32 +196,65 @@ function takePhoto(){
  canvas.toBlob(blob=>{if(!blob){say('Gagal membuat foto.');return}
   const url=URL.createObjectURL(blob),name='CAMERA-SENDY-FOTO-'+Date.now()+'.jpg';
   addItem(blob,'image',name,url);say('Foto berhasil dibuat. Tekan Download Foto untuk menyimpannya.');
- },'image/jpeg',.96);
+ },'image/jpeg',.99);
 }
 function chooseMime(){
  return ['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4'].find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t))||'';
 }
+function drawRecordingFrame(){
+ if(!isRecording || !recordingCtx || !preview.videoWidth){return}
+ const w=recordingCanvas.width,h=recordingCanvas.height;
+ try{
+  recordingCtx.save();
+  recordingCtx.clearRect(0,0,w,h);
+  recordingCtx.filter=(filters[currentFilter]||'none')+' brightness('+($('#brightness').value/100)+')';
+  if($('#cameraSelect').value==='user'){
+   recordingCtx.translate(w,0);recordingCtx.scale(-1,1);
+  }
+  recordingCtx.drawImage(preview,0,0,w,h);
+  recordingCtx.restore();
+ }catch(e){}
+ recordingFrame=requestAnimationFrame(drawRecordingFrame);
+}
 function startRecording(){
  if(!stream)return;
  if(!window.MediaRecorder){say('Perekaman video belum didukung browser ini.');return}
- chunks=[];const mime=chooseMime();
- try{recorder=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:8000000,audioBitsPerSecond:192000}:undefined)}
- catch(e){say('Tidak dapat memulai perekaman: '+e.message);return}
+ chunks=[];
+ try{
+  // Cap the recording canvas at Full HD to reduce lag on phones, even if the camera is 4K.
+  const sourceW=preview.videoWidth||1280,sourceH=preview.videoHeight||720;
+  const scale=Math.min(1,1920/sourceW,1080/sourceH);
+  recordingCanvas=document.createElement('canvas');
+  recordingCanvas.width=Math.max(2,Math.floor(sourceW*scale/2)*2);
+  recordingCanvas.height=Math.max(2,Math.floor(sourceH*scale/2)*2);
+  recordingCtx=recordingCanvas.getContext('2d',{alpha:false,desynchronized:true});
+  recordingCtx.imageSmoothingEnabled=true;recordingCtx.imageSmoothingQuality='high';
+  recordingCanvasStream=recordingCanvas.captureStream(30);
+  const audioTrack=stream.getAudioTracks()[0];
+  if(audioTrack)recordingCanvasStream.addTrack(audioTrack.clone());
+  const mime=chooseMime();
+  recorder=new MediaRecorder(recordingCanvasStream,mime?{mimeType:mime,videoBitsPerSecond:6000000,audioBitsPerSecond:128000}:undefined);
+ }catch(e){say('Tidak dapat memulai perekaman: '+e.message);return}
  recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
  recorder.onerror=()=>say('Terjadi kesalahan saat merekam.');
  recorder.onstop=()=>{
+  cancelAnimationFrame(recordingFrame);
+  if(recordingCanvasStream)recordingCanvasStream.getTracks().forEach(t=>t.stop());
   const blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'}),url=URL.createObjectURL(blob);
   const ext=blob.type.includes('mp4')?'mp4':'webm',name='CAMERA-SENDY-VIDEO-'+Date.now()+'.'+ext;
-  addItem(blob,'video',name,url);say('Video selesai direkam. Tekan Download Video untuk menyimpan file.');
+  addItem(blob,'video',name,url);say('Video selesai direkam. Filter '+currentFilter.toUpperCase()+' sudah menyatu ke video. Tekan Download Video untuk menyimpan file.');
  };
- recorder.start(250);isRecording=true;startedAt=Date.now();
+ isRecording=true;
+ recordingFrame=requestAnimationFrame(drawRecordingFrame);
+ recorder.start(1000);startedAt=Date.now();
  $('#recordBtn').textContent='■ Berhenti';$('#recordBtn').classList.add('recording');$('#recDot').classList.add('live');
  $('#photoBtn').disabled=true;timerLoop=setInterval(()=>{const s=Math.floor((Date.now()-startedAt)/1000);$('#timer').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},250);
- say('Sedang merekam video dan suara mikrofon…');
+ say('Merekam video dengan filter tertanam dan audio mikrofon. Untuk mengurangi lag, hasil video dibatasi maksimal Full HD / 30 FPS.');
 }
 function stopRecording(){
  if(!isRecording)return;
  isRecording=false;if(recorder&&recorder.state!=='inactive')recorder.stop();
+ else {cancelAnimationFrame(recordingFrame);if(recordingCanvasStream)recordingCanvasStream.getTracks().forEach(t=>t.stop())}
  clearInterval(timerLoop);$('#recordBtn').textContent='● Rekam Video';$('#recordBtn').classList.remove('recording');
  $('#recDot').classList.remove('live');$('#photoBtn').disabled=!stream;$('#timer').textContent='00:00';
 }
@@ -196,7 +265,7 @@ $('#permissionBtn').addEventListener('click',startCamera);
 window.addEventListener('DOMContentLoaded',()=>{startCamera()});
 $('#photoBtn').addEventListener('click',takePhoto);
 $('#recordBtn').addEventListener('click',()=>isRecording?stopRecording():startRecording());
-document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>applyFilter(b.dataset.filter)));
+$('#filterSelect').addEventListener('change',e=>applyFilter(e.target.value));
 $('#zoom').addEventListener('input',applyZoom);
 $('#brightness').addEventListener('input',()=>{$('#brightOut').value=$('#brightness').value+'%';applyFilter(currentFilter)});
 $('#cameraSelect').addEventListener('change',()=>{applyZoom();if(stream)startCamera()});
