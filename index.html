@@ -6,11 +6,14 @@
 <meta name="theme-color" content="#08090d">
 <title>CAMERA SENDY — Kamera HD</title>
 <style>
-:root{--bg:#08090d;--panel:#11131b;--line:#252938;--text:#f5f7ff;--muted:#9ba3b7;--cyan:#64f5ff;--pink:#d77bff;--red:#ff4667}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#22213b 0%,#0b0c12 43%,var(--bg) 75%);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+:root{
+--bg:#08090d;--panel:#11131b;--line:#252938;--text:#f5f7ff;--muted:#9ba3b7;--cyan:#64f5ff;--pink:#d77bff;--red:#ff4667;
+--accent:#64f5ff;--accent2:#d77bff;--glow:#64f5ff22;
+}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#22213b 0%,#0b0c12 43%,var(--bg) 75%);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh;transition:background .3s,color .3s}
 header{padding:20px 18px 12px;max-width:900px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{font-size:20px;font-weight:900;letter-spacing:2px}.brand span{color:var(--cyan);text-shadow:0 0 16px #64f5ff80}.sub{font-size:11px;color:var(--muted);letter-spacing:1.6px}
-main{max-width:900px;margin:auto;padding:8px 14px 30px}.preview-wrap{position:relative;overflow:hidden;border:1px solid #3b4054;border-radius:24px;background:#050609;box-shadow:0 0 0 1px #64f5ff10,0 0 35px #6a56ff20;transition:aspect-ratio .2s}
+.brand{font-size:20px;font-weight:900;letter-spacing:2px}.brand span{color:var(--accent);text-shadow:0 0 16px var(--glow)}.sub{font-size:11px;color:var(--muted);letter-spacing:1.6px}
+main{max-width:900px;margin:auto;padding:8px 14px 30px}.preview-wrap{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:24px;background:#050609;box-shadow:0 0 0 1px var(--accent)10,0 0 35px var(--accent)20;transition:border-color .3s,box-shadow .3s}
 #preview{width:100%;height:min(61vh,570px);min-height:280px;display:block;object-fit:cover;background:#050609;filter:none;transform:scaleX(1)}
 .overlay{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:14px}
 .topline,.bottomline{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -23,18 +26,27 @@ h2{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#d8ddf2;ma
 .filter-select-wrap{display:grid;grid-template-columns:1fr;gap:8px}
 button,select,input{font:inherit}button{color:var(--text);background:#1b1e2a;border:1px solid #34394b;border-radius:13px;padding:11px 10px;cursor:pointer;transition:.15s}
 button:active{transform:scale(.98)}button:disabled{opacity:.4;cursor:not-allowed}
-.filter-select{width:100%;padding:14px;border-color:#3c6070;background:linear-gradient(135deg,#111923,#0b0d13);box-shadow:0 0 16px #64f5ff12;font-weight:700}
+.filter-select{width:100%;padding:14px;border-color:#3c6070;background:linear-gradient(135deg,#111923,#0b0d13);box-shadow:0 0 16px var(--glow);font-weight:700}
 
 .controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
 select,input[type=range],input[type=text]{width:100%}select{background:#0b0d13;color:var(--text);border:1px solid #34394b;border-radius:11px;padding:11px}
 input[type=text]{background:#0b0d13;color:var(--text);border:1px solid #34394b;border-radius:11px;padding:11px}
-.range-row{display:flex;align-items:center;gap:10px}.range-row input{accent-color:var(--cyan)}.range-row output{min-width:38px;text-align:right;color:var(--cyan);font-size:12px}
+.range-row{display:flex;align-items:center;gap:10px}.range-row input{accent-color:var(--accent)}.range-row output{min-width:38px;text-align:right;color:var(--accent);font-size:12px}
 .actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-top:12px}
-.action{min-height:58px;font-weight:750}.photo{border-color:#64f5ff80;background:linear-gradient(135deg,#16434b,#17202c);box-shadow:0 0 18px #64f5ff18}.record{border-color:#ff466780;background:linear-gradient(135deg,#48182a,#20131d)}.recording{background:#7b1934;box-shadow:0 0 22px #ff466750}
-#gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{border:1px solid #2c3040;border-radius:14px;overflow:hidden;background:#0a0b10}.item img,.item video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#000}.item-info{padding:9px}.item-info strong{display:block;font-size:12px;overflow-wrap:anywhere}.item-info a{display:inline-block;margin-top:7px;color:var(--cyan);font-size:12px;text-decoration:none}.hint{color:var(--muted);font-size:12px;margin:10px 2px 0}.full{grid-column:1/-1}.smallbtn{padding:8px 10px;font-size:12px}
+.action{min-height:58px;font-weight:750}.photo{border-color:var(--accent)80;background:linear-gradient(135deg,#16434b,#17202c);box-shadow:0 0 18px var(--glow)}.record{border-color:#ff466780;background:linear-gradient(135deg,#48182a,#20131d)}.recording{background:#7b1934;box-shadow:0 0 22px #ff466750}
+#gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{border:1px solid #2c3040;border-radius:14px;overflow:hidden;background:#0a0b10}.item img,.item video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#000}.item-info{padding:9px}.item-info strong{display:block;font-size:12px;overflow-wrap:anywhere}.item-info a{display:inline-block;margin-top:7px;color:var(--accent);font-size:12px;text-decoration:none}.hint{color:var(--muted);font-size:12px;margin:10px 2px 0}.full{grid-column:1/-1}.smallbtn{padding:8px 10px;font-size:12px}
 footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
+.subtitle-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}
+.sub-opt{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
 @media(min-width:700px){#gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.controls{grid-template-columns:repeat(4,minmax(0,1fr))}.filter-select-wrap{grid-template-columns:1fr auto;align-items:center}.filter-select-wrap .hint{margin:0}}
+
+/* Theme swatches */
+.theme-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}
+.theme-btn{aspect-ratio:1;border-radius:12px;border:2px solid #34394b;cursor:pointer;padding:0;position:relative;overflow:hidden;transition:.2s}
+.theme-btn:hover{transform:scale(1.05)}
+.theme-btn.active{border-color:var(--accent);box-shadow:0 0 12px var(--glow)}
+.theme-btn span{position:absolute;bottom:2px;left:2px;right:2px;font-size:8px;color:#fff;text-shadow:0 1px 3px #000;text-align:center;font-weight:700}
 </style>
 </head>
 <body>
@@ -58,8 +70,16 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
  </div>
  <div class="actions" style="grid-template-columns:1fr 1fr;margin-top:10px">
   <button id="pauseBtn" class="action" disabled style="border-color:#ffb84d80;background:linear-gradient(135deg,#4a3a18,#201a13)">⏸ Jeda Video</button>
-  <button id="resumeBtn" class="action" disabled style="border-color:#64f5ff80;background:linear-gradient(135deg,#16434b,#17202c)">▶ Lanjutkan</button>
+  <button id="resumeBtn" class="action" disabled style="border-color:var(--accent)80;background:linear-gradient(135deg,#16434b,#17202c)">▶ Lanjutkan</button>
  </div>
+
+ <!-- THEME SWITCHER -->
+ <section class="panel">
+  <h2>🎨 Tema aplikasi</h2>
+  <div class="theme-grid" id="themeGrid"></div>
+  <p class="hint">Pilih tema untuk mengubah tampilan CAMERA SENDY. Tema tidak memengaruhi hasil foto/video.</p>
+ </section>
+
  <section class="panel">
   <h2>Filter kamera</h2>
   <div class="filter-select-wrap">
@@ -95,12 +115,61 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
   </div>
   <p class="hint">Kualitas akhir bergantung pada kamera, pencahayaan, browser, dan perangkat. Foto disimpan dengan kualitas JPEG tinggi. Rekaman video memakai filter yang menyatu ke gambar dan dibatasi hingga Full HD/30 FPS agar lebih ringan; hasil tetap bergantung pada perangkat.</p>
  </section>
+
+ <!-- SUBTITLE WITH NEW OPTIONS -->
  <section class="panel">
   <h2>Subtitle video (CC)</h2>
-  <label for="subtitleInput">Teks subtitle (tampil & menyatu ke video)</label>
-  <input id="subtitleInput" type="text" placeholder="Tulis subtitle di sini…" maxlength="120" style="width:100%">
-  <p class="hint">Subtitle akan tampil di pratinjau saat merekam dan dibakar permanen ke video hasil rekaman. Kosongkan untuk menonaktifkan subtitle.</p>
+  <div class="subtitle-row">
+   <div>
+    <label for="subtitleInput">Teks subtitle (tampil & menyatu ke video)</label>
+    <input id="subtitleInput" type="text" placeholder="Tulis subtitle di sini…" maxlength="160" style="width:100%">
+   </div>
+  </div>
+  <div class="sub-opt">
+   <div>
+    <label for="subOpacity">Kontras hitam-putih</label>
+    <select id="subOpacity">
+     <option value="100">100 — Normal</option>
+     <option value="90">90 — Tinggi</option>
+     <option value="80">80 — Sedang</option>
+     <option value="70" selected>70 — Nyaman</option>
+     <option value="60">60 — Lembut</option>
+     <option value="50">50 — Rendah</option>
+     <option value="40">40 — Sangat rendah</option>
+     <option value="30">30 — Minimal</option>
+     <option value="20">20 — Faint</option>
+     <option value="10">10 — Hampir tak terlihat</option>
+     <option value="1">1 — Sangat tipis</option>
+    </select>
+   </div>
+   <div>
+    <label for="subInterval">Tampil per</label>
+    <select id="subInterval">
+     <option value="1">1 detik</option>
+     <option value="2">2 detik</option>
+     <option value="3" selected>3 detik</option>
+     <option value="4">4 detik</option>
+     <option value="5">5 detik</option>
+     <option value="10">10 detik</option>
+     <option value="15">15 detik</option>
+     <option value="20">20 detik</option>
+     <option value="30">30 detik</option>
+     <option value="60">1 menit</option>
+     <option value="100">100 detik</option>
+    </select>
+   </div>
+   <div>
+    <label for="subMode">Mode tampil</label>
+    <select id="subMode">
+     <option value="continuous">Terus menerus</option>
+     <option value="perword">Per kata</option>
+     <option value="persentence">Per kalimat</option>
+    </select>
+   </div>
+  </div>
+  <p class="hint">Subtitle tanpa background, hanya kontras teks hitam-putih. Atur interval tampil per detik, per kata, atau per kalimat. Subtitle tampil di pratinjau dan dibakar permanen ke video.</p>
  </section>
+
  <section class="panel">
   <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px"><h2 style="margin:0">Hasil foto & video</h2><button id="clearBtn" class="smallbtn">Kosongkan</button></div>
   <div id="gallery"><div class="item full"><div class="item-info" style="color:var(--muted)">Belum ada hasil. Foto atau video yang dibuat akan muncul di sini dengan tombol download.</div></div></div>
@@ -112,6 +181,8 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
 const $=s=>document.querySelector(s), preview=$('#preview'), statusEl=$('#status'), previewWrap=$('#previewWrap');
 let stream=null, recorder=null, chunks=[], currentFilter='none', isRecording=false, isPaused=false, startedAt=0, timerLoop=null, itemCount=0;
 let recordingCanvas=null, recordingCtx=null, recordingFrame=0, recordingCanvasStream=null;
+let subTimer=null, subIndex=0;
+
 const filters={
  none:'none',
  auto:'contrast(1.04) saturate(1.08) brightness(1.025)',
@@ -130,8 +201,56 @@ const filters={
  dream:'brightness(1.08) saturate(1.2)',
  cinema:'contrast(1.2) saturate(.82) sepia(.12)'
 };
-function say(t){statusEl.textContent=t}
 
+/* ===== THEMES ===== */
+const themes=[
+ {name:'Neon', accent:'#64f5ff', accent2:'#d77bff', bg:'#08090d', bg2:'#22213b', panel:'#11131b', line:'#252938', text:'#f5f7ff', muted:'#9ba3b7'},
+ {name:'Sunset', accent:'#ff9a4d', accent2:'#ff4667', bg:'#0d0808', bg2:'#2b1620', panel:'#1a1014', line:'#3a2830', text:'#fff5f0', muted:'#c9a9a0'},
+ {name:'Ocean', accent:'#4dc9ff', accent2:'#7bffd4', bg:'#050b14', bg2:'#0e2740', panel:'#0c1520', line:'#1e3448', text:'#f0f8ff', muted:'#8fb0c8'},
+ {name:'Forest', accent:'#6dff8a', accent2:'#d4ff6d', bg:'#050d08', bg2:'#0e2416', panel:'#0c1610', line:'#1e3a26', text:'#f2fff5', muted:'#94b89e'},
+ {name:'Royal', accent:'#b07bff', accent2:'#ff7bd5', bg:'#0a0614', bg2:'#1e1030', panel:'#140e20', line:'#2e1e44', text:'#f8f2ff', muted:'#b8a0d0'},
+ {name:'Crimson', accent:'#ff4667', accent2:'#ffb84d', bg:'#0d0505', bg2:'#2b0e12', panel:'#1a0c0e', line:'#3a1e22', text:'#fff5f5', muted:'#c9a0a0'},
+ {name:'Mono', accent:'#ffffff', accent2:'#b0b0b0', bg:'#080808', bg2:'#1e1e1e', panel:'#111111', line:'#2e2e2e', text:'#f5f5f5', muted:'#9a9a9a'},
+ {name:'Cyber', accent:'#ff4dff', accent2:'#4dffea', bg:'#050510', bg2:'#1a0e2e', panel:'#0e0c18', line:'#2a1e3e', text:'#faf0ff', muted:'#b0a0c8'},
+ {name:'Mocha', accent:'#d4a574', accent2:'#ff8a65', bg:'#0d0a08', bg2:'#241a12', panel:'#16100c', line:'#34281e', text:'#fff8f0', muted:'#c0a890'},
+ {name:'Mint', accent:'#5dffc0', accent2:'#5db8ff', bg:'#050d0a', bg2:'#0e2420', panel:'#0c1614', line:'#1e3430', text:'#f0fff8', muted:'#90b8a8'}
+];
+function applyTheme(i){
+ const t=themes[i];
+ const r=document.documentElement.style;
+ r.setProperty('--accent',t.accent);
+ r.setProperty('--accent2',t.accent2);
+ r.setProperty('--bg',t.bg);
+ r.setProperty('--panel',t.panel);
+ r.setProperty('--line',t.line);
+ r.setProperty('--text',t.text);
+ r.setProperty('--muted',t.muted);
+ r.setProperty('--glow',t.accent+'22');
+ r.setProperty('--cyan',t.accent);
+ r.setProperty('--pink',t.accent2);
+ document.body.style.background='radial-gradient(ellipse at 50% -10%,'+t.bg2+' 0%,'+t.bg+' 43%,'+t.bg+' 75%)';
+ // update theme grid active state
+ document.querySelectorAll('.theme-btn').forEach((b,idx)=>b.classList.toggle('active',idx===i));
+ localStorage.setItem('sendyTheme',i);
+}
+function buildThemeGrid(){
+ const grid=$('#themeGrid');grid.innerHTML='';
+ themes.forEach((t,i)=>{
+  const b=document.createElement('button');
+  b.className='theme-btn';
+  b.style.background='linear-gradient(135deg,'+t.accent+','+t.accent2+')';
+  b.title=t.name;
+  const s=document.createElement('span');s.textContent=t.name;b.appendChild(s);
+  b.addEventListener('click',()=>applyTheme(i));
+  grid.appendChild(b);
+ });
+}
+const savedTheme=parseInt(localStorage.getItem('sendyTheme')||'0',10);
+buildThemeGrid();
+applyTheme(isNaN(savedTheme)?0:savedTheme);
+
+/* ===== CAMERA ===== */
+function say(t){statusEl.textContent=t}
 function getAspect(){
  const mode=$('#modeSelect').value;
  if(mode==='portrait') return {w:9,h:16,label:'Potret 9:16'};
@@ -139,8 +258,6 @@ function getAspect(){
 }
 function getConstraints(){
  const mode=$('#resolution').value;
- const asp=getAspect();
- // request higher base so we can crop to the desired aspect ratio
  let baseW= mode==='hd'?1280:mode==='fullhd'?1920:3840;
  let baseH= mode==='hd'?720:mode==='fullhd'?1080:2160;
  let video={facingMode:{ideal:$('#cameraSelect').value},width:{ideal:baseW},height:{ideal:baseH},frameRate:{ideal:30,max:30}};
@@ -194,31 +311,47 @@ function updatePreviewAspect(){
  const asp=getAspect();
  previewWrap.style.aspectRatio=asp.w+'/'+asp.h;
  previewWrap.style.maxHeight='80vh';
- // height will be controlled by aspect-ratio; override inline min-height
  preview.style.height='100%';
  preview.style.minHeight='0';
 }
 
-/* -------- drawing helpers -------- */
-function getTargetSize(){
- const asp=getAspect();
- // keep source resolution but crop to aspect
- const srcW=preview.videoWidth||1280, srcH=preview.videoHeight||720;
- const targetRatio=asp.w/asp.h;
- const srcRatio=srcW/srcH;
- let outW,outH;
- if(srcRatio>targetRatio){ // source wider than target -> crop width
-   outH=srcH;
-   outW=Math.round(srcH*targetRatio);
- }else{
-   outW=srcW;
-   outH=Math.round(srcW/targetRatio);
+/* ===== SUBTITLE ===== */
+function getSubtitleText(){
+ const raw=($('#subtitleInput').value||'').trim();
+ if(!raw) return '';
+ const mode=$('#subMode').value;
+ if(mode==='continuous') return raw;
+ const words=raw.split(/\s+/);
+ if(mode==='perword'){
+   const idx=subIndex % words.length;
+   return words[idx];
  }
- // cap at 1920 max dimension for video
- const scale=Math.min(1,1920/outW,1080/outH);
- return {w:Math.max(2,Math.floor(outW*scale/2)*2),h:Math.max(2,Math.floor(outH*scale/2)*2),srcW,srcH,targetRatio};
+ if(mode==='persentence'){
+   const sentences=raw.split(/(?<=[.!?])\s+/).filter(Boolean);
+   if(!sentences.length) return raw;
+   const idx=subIndex % sentences.length;
+   return sentences[idx];
+ }
+ return raw;
+}
+function getSubtitleIntervalMs(){
+ const sec=parseFloat($('#subInterval').value)||3;
+ return sec*1000;
+}
+function startSubtitleLoop(){
+ clearInterval(subTimer);
+ subIndex=0;
+ subTimer=setInterval(()=>{
+  subIndex++;
+ }, getSubtitleIntervalMs());
+}
+function stopSubtitleLoop(){
+ clearInterval(subTimer);
+ subTimer=null;
+ subIndex=0;
 }
 
+/* ===== DRAWING ===== */
 function drawFrame(){
  const asp=getAspect();
  const srcW=preview.videoWidth||1280, srcH=preview.videoHeight||720;
@@ -231,7 +364,6 @@ function drawFrame(){
  const mirror=$('#cameraSelect').value==='user';
  c.save();
  c.filter=filters[currentFilter]+' brightness('+($('#brightness').value/100)+')';
- // center crop from source
  const sx=(srcW-cw)/2, sy=(srcH-ch)/2;
  if(mirror){ c.translate(cw,0); c.scale(-1,1); c.drawImage(preview,sx,sy,cw,ch,0,0,cw,ch); }
  else { c.drawImage(preview,sx,sy,cw,ch,0,0,cw,ch); }
@@ -239,18 +371,17 @@ function drawFrame(){
  drawSubtitleOnCanvas(c,cw,ch);
  return canvas;
 }
-
 function drawSubtitleOnCanvas(ctx,w,h){
- const text=($('#subtitleInput').value||'').trim();
+ const text=getSubtitleText();
  if(!text) return;
+ const contrast=parseInt($('#subOpacity').value,10)/100; // 0.01..1
  const base=Math.max(16,Math.round(w*0.032));
  const fontSize=base;
  ctx.save();
- ctx.font='700 '+fontSize+'px system-ui,-apple-system,Segoe UI,Roboto,sans-serif';
+ ctx.font='800 '+fontSize+'px system-ui,-apple-system,Segoe UI,Roboto,sans-serif';
  ctx.textAlign='center';
  ctx.textBaseline='bottom';
- const maxWidth=w*0.86;
- // wrap text
+ const maxWidth=w*0.88;
  const words=text.split(/\s+/);
  const lines=[]; let line='';
  for(const word of words){
@@ -258,44 +389,29 @@ function drawSubtitleOnCanvas(ctx,w,h){
    if(ctx.measureText(test).width>maxWidth && line){lines.push(line);line=word}else{line=test}
  }
  if(line)lines.push(line);
- const lineH=fontSize*1.35;
+ const lineH=fontSize*1.3;
  const totalH=lines.length*lineH;
- const padX=fontSize*0.6, padY=fontSize*0.35;
- const boxW=Math.min(maxWidth+padX*2,w*0.92);
- const boxH=totalH+padY*2;
  const x=w/2;
- const y=h - Math.max(12,h*0.06) - boxH;
- // background pill
- ctx.fillStyle='rgba(8,9,13,0.72)';
- const r=Math.min(14,boxH/2);
- roundRect(ctx,x-boxW/2,y,boxW,boxH,r);
- ctx.fill();
- // stroke
- ctx.lineWidth=Math.max(1,fontSize*0.06);
- ctx.strokeStyle='rgba(255,255,255,0.18)';
- roundRect(ctx,x-boxW/2,y,boxW,boxH,r);
- ctx.stroke();
- // text
- ctx.fillStyle='#ffffff';
- ctx.shadowColor='rgba(0,0,0,0.9)';
- ctx.shadowBlur=Math.max(2,fontSize*0.12);
- ctx.shadowOffsetY=1;
+ const y=h - Math.max(12,h*0.06) - totalH;
+ // NO background. Use high-contrast text: white fill + strong black stroke.
+ const strokeW=Math.max(2,fontSize*0.14*contrast+1);
+ ctx.lineJoin='round';
+ ctx.miterLimit=2;
  lines.forEach((ln,i)=>{
-   const ly=y+padY+(i+1)*lineH-fontSize*0.18;
+   const ly=y+(i+1)*lineH-fontSize*0.18;
+   // black outline
+   ctx.lineWidth=strokeW;
+   ctx.strokeStyle='rgba(0,0,0,'+(0.55+0.45*contrast)+')';
+   ctx.strokeText(ln,x,ly,maxWidth);
+   // white fill
+   ctx.fillStyle='rgba(255,255,255,'+(0.7+0.3*contrast)+')';
+   ctx.shadowColor='rgba(0,0,0,0.9)';
+   ctx.shadowBlur=Math.max(2,fontSize*0.14);
+   ctx.shadowOffsetY=1;
    ctx.fillText(ln,x,ly,maxWidth);
  });
  ctx.restore();
 }
-function roundRect(ctx,x,y,w,h,r){
- ctx.beginPath();
- ctx.moveTo(x+r,y);
- ctx.arcTo(x+w,y,x+w,y+h,r);
- ctx.arcTo(x+w,y+h,x,y+h,r);
- ctx.arcTo(x,y+h,x,y,r);
- ctx.arcTo(x,y,x+w,y,r);
- ctx.closePath();
-}
-
 function addItem(blob,type,filename,previewUrl){
  itemCount++;const wrap=document.createElement('div');wrap.className='item';
  if(type==='image'){const im=document.createElement('img');im.src=previewUrl;im.alt='Hasil foto';wrap.append(im)}
@@ -334,7 +450,6 @@ function drawRecordingFrame(){
   }
   recordingCtx.drawImage(preview,sx,sy,cw,ch,0,0,w,h);
   recordingCtx.restore();
-  // subtitle burnt into recording
   drawSubtitleOnCanvas(recordingCtx,w,h);
  }catch(e){}
  recordingFrame=requestAnimationFrame(drawRecordingFrame);
@@ -371,6 +486,7 @@ function startRecording(){
   addItem(blob,'video',name,url);say('Video selesai direkam. Filter & subtitle sudah menyatu ke video. Tekan Download Video untuk menyimpan file.');
  };
  isRecording=true; isPaused=false;
+ startSubtitleLoop();
  recordingFrame=requestAnimationFrame(drawRecordingFrame);
  recorder.start(1000);startedAt=Date.now();
  $('#recordBtn').textContent='■ Berhenti';$('#recordBtn').classList.add('recording');$('#recDot').classList.add('live');
@@ -382,6 +498,7 @@ function startRecording(){
 function stopRecording(){
  if(!isRecording)return;
  isRecording=false;isPaused=false;
+ stopSubtitleLoop();
  if(recorder&&recorder.state!=='inactive')recorder.stop();
  else {cancelAnimationFrame(recordingFrame);if(recordingCanvasStream)recordingCanvasStream.getTracks().forEach(t=>t.stop())}
  clearInterval(timerLoop);$('#recordBtn').textContent='● Rekam Video';$('#recordBtn').classList.remove('recording');
@@ -416,10 +533,12 @@ $('#brightness').addEventListener('input',()=>{$('#brightOut').value=$('#brightn
 $('#cameraSelect').addEventListener('change',()=>{applyZoom();if(stream)startCamera()});
 $('#resolution').addEventListener('change',()=>{if(stream)startCamera()});
 $('#modeSelect').addEventListener('change',()=>{updatePreviewAspect();if(stream)startCamera()});
-$('#subtitleInput').addEventListener('input',()=>{ /* live preview handled at draw time */ });
+$('#subtitleInput').addEventListener('input',()=>{ /* handled at draw time */ });
+$('#subInterval').addEventListener('change',()=>{ if(isRecording) startSubtitleLoop(); });
+$('#subMode').addEventListener('change',()=>{ subIndex=0; });
 $('#clearBtn').addEventListener('click',()=>{if(isRecording){say('Hentikan rekaman sebelum mengosongkan hasil.');return}$('#gallery').innerHTML='<div class="item full"><div class="item-info" style="color:var(--muted)">Galeri dikosongkan.</div></div>';itemCount=0});
-window.addEventListener('pagehide',()=>{if(stream)stream.getTracks().forEach(t=>t.stop())});
+window.addEventListener('pagehide',()=>{if(stream)stream.getTracks().forEach(t=>t.stop());stopSubtitleLoop()});
 applyFilter('none');$('#brightOut').value='100%';
 </script>
 </body>
-</html>
+ </html>
