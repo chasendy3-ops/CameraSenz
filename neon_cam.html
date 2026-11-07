@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08090d">
+<title>NEON CAM — Kamera HD</title>
+<style>
+:root{--bg:#08090d;--panel:#11131b;--line:#252938;--text:#f5f7ff;--muted:#9ba3b7;--cyan:#64f5ff;--pink:#d77bff;--red:#ff4667}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#22213b 0%,#0b0c12 43%,var(--bg) 75%);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+header{padding:20px 18px 12px;max-width:900px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:20px;font-weight:900;letter-spacing:2px}.brand span{color:var(--cyan);text-shadow:0 0 16px #64f5ff80}.sub{font-size:11px;color:var(--muted);letter-spacing:1.6px}
+main{max-width:900px;margin:auto;padding:8px 14px 30px}.preview-wrap{position:relative;overflow:hidden;border:1px solid #3b4054;border-radius:24px;background:#050609;box-shadow:0 0 0 1px #64f5ff10,0 0 35px #6a56ff20}
+#preview{width:100%;height:min(61vh,570px);min-height:280px;display:block;object-fit:cover;background:#050609;filter:none;transform:scaleX(1)}
+.overlay{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:14px}
+.topline,.bottomline{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pill{border:1px solid #ffffff30;background:#08090dbb;backdrop-filter:blur(12px);border-radius:99px;padding:7px 11px;font-size:12px;color:#f8faff}
+.dot{display:inline-block;width:7px;height:7px;background:#888;border-radius:50%;margin-right:6px}.dot.live{background:#4dff9b;box-shadow:0 0 9px #4dff9b}
+#timer{font-variant-numeric:tabular-nums;font-weight:800}
+.status{color:var(--muted);font-size:13px;min-height:20px;margin:10px 3px}
+.panel{margin-top:14px;padding:15px;border:1px solid var(--line);background:linear-gradient(145deg,#151722e8,#0e1017e8);border-radius:20px;box-shadow:0 8px 35px #0004}
+h2{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#d8ddf2;margin:0 0 12px}
+.filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+button,select,input{font:inherit}button{color:var(--text);background:#1b1e2a;border:1px solid #34394b;border-radius:13px;padding:11px 10px;cursor:pointer;transition:.15s}
+button:active{transform:scale(.98)}button:disabled{opacity:.4;cursor:not-allowed}.filter.active{border-color:var(--cyan);background:#183039;box-shadow:0 0 14px #64f5ff20}.filter{font-size:12px;padding:10px 5px}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+select,input[type=range]{width:100%}select{background:#0b0d13;color:var(--text);border:1px solid #34394b;border-radius:11px;padding:11px}
+.range-row{display:flex;align-items:center;gap:10px}.range-row input{accent-color:var(--cyan)}.range-row output{min-width:38px;text-align:right;color:var(--cyan);font-size:12px}
+.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-top:12px}
+.action{min-height:58px;font-weight:750}.photo{border-color:#64f5ff80;background:linear-gradient(135deg,#16434b,#17202c);box-shadow:0 0 18px #64f5ff18}.record{border-color:#ff466780;background:linear-gradient(135deg,#48182a,#20131d)}.recording{background:#7b1934;box-shadow:0 0 22px #ff466750}
+#gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.item{border:1px solid #2c3040;border-radius:14px;overflow:hidden;background:#0a0b10}.item img,.item video{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#000}.item-info{padding:9px}.item-info strong{display:block;font-size:12px;overflow-wrap:anywhere}.item-info a{display:inline-block;margin-top:7px;color:var(--cyan);font-size:12px;text-decoration:none}.hint{color:var(--muted);font-size:12px;margin:10px 2px 0}.full{grid-column:1/-1}.smallbtn{padding:8px 10px;font-size:12px}
+footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
+@media(min-width:700px){.filters{grid-template-columns:repeat(8,minmax(0,1fr))}#gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.controls{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">NEON <span>CAM</span></div><div class="sub">HD PHOTO • VIDEO • AUDIO</div></div><div class="pill"><span id="liveDot" class="dot"></span><span id="camState">KAMERA NONAKTIF</span></div></header>
+<main>
+ <section class="preview-wrap">
+  <video id="preview" autoplay playsinline muted></video>
+  <div class="overlay"><div class="topline"><span class="pill" id="qualityBadge">HD READY</span><span class="pill"><span id="recDot" class="dot"></span><span id="timer">00:00</span></span></div><div class="bottomline"><span class="pill" id="filterBadge">NORMAL</span><span class="pill">NEON CAM</span></div></div>
+ </section>
+ <div class="status" id="status" role="status">Tekan “Aktifkan Kamera”, lalu izinkan akses kamera dan mikrofon.</div>
+ <div class="actions">
+  <button id="startBtn" class="action photo">◉ Aktifkan Kamera</button>
+  <button id="photoBtn" class="action" disabled>◎ Ambil Foto</button>
+  <button id="recordBtn" class="action record" disabled>● Rekam Video</button>
+ </div>
+ <section class="panel">
+  <h2>Filter kamera</h2>
+  <div class="filters">
+   <button class="filter active" data-filter="none">Normal</button><button class="filter" data-filter="vivid">Vivid</button><button class="filter" data-filter="mono">B&W</button><button class="filter" data-filter="warm">Warm</button><button class="filter" data-filter="cool">Cool</button><button class="filter" data-filter="cinema">Cinema</button><button class="filter" data-filter="dream">Dream</button><button class="filter" data-filter="noir">Noir</button>
+  </div>
+ </section>
+ <section class="panel">
+  <h2>Pengaturan kualitas</h2>
+  <div class="controls">
+   <div><label for="cameraSelect">Kamera</label><select id="cameraSelect"><option value="environment">Belakang</option><option value="user">Depan</option></select></div>
+   <div><label for="resolution">Resolusi target</label><select id="resolution"><option value="hd">HD 720p</option><option value="fullhd" selected>Full HD 1080p</option><option value="max">Tertinggi perangkat</option></select></div>
+   <div><label for="zoom">Zoom digital</label><div class="range-row"><input id="zoom" type="range" min="1" max="3" value="1" step=".1"><output id="zoomOut">1.0×</output></div></div>
+   <div><label for="brightness">Kecerahan</label><div class="range-row"><input id="brightness" type="range" min="70" max="140" value="100"><output id="brightOut">100%</output></div></div>
+  </div>
+  <p class="hint">Kualitas akhir bergantung pada kamera, pencahayaan, browser, dan perangkat. Filter serta zoom digital dapat mengubah tampilan; keduanya tidak menambah detail optik asli.</p>
+ </section>
+ <section class="panel">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px"><h2 style="margin:0">Hasil foto & video</h2><button id="clearBtn" class="smallbtn">Kosongkan</button></div>
+  <div id="gallery"><div class="item full"><div class="item-info" style="color:var(--muted)">Belum ada hasil. Foto atau video yang dibuat akan muncul di sini dengan tombol download.</div></div></div>
+ </section>
+ <p class="hint">Catatan: suara video direkam melalui mikrofon perangkat. Pastikan izin mikrofon aktif dan gunakan HTTPS atau localhost; akses kamera biasanya tidak berjalan dari halaman HTTP biasa. Untuk merekam audio, suara pratinjau dibisukan agar tidak terjadi gema.</p>
+</main>
+<footer>NEON CAM · Kamera browser dengan efek visual</footer>
+<script>
+const $=s=>document.querySelector(s), preview=$('#preview'), statusEl=$('#status');
+let stream=null, recorder=null, chunks=[], currentFilter='none', isRecording=false, startedAt=0, timerLoop=null, itemCount=0;
+const filters={
+ none:'none',vivid:'saturate(1.45) contrast(1.08)',mono:'grayscale(1) contrast(1.12)',
+ warm:'sepia(.28) saturate(1.2) hue-rotate(-8deg)',cool:'saturate(1.08) hue-rotate(12deg) brightness(1.03)',
+ cinema:'contrast(1.2) saturate(.82) sepia(.12)',dream:'brightness(1.08) saturate(1.2) blur(.25px)',
+ noir:'grayscale(1) contrast(1.45) brightness(.85)'
+};
+function say(t){statusEl.textContent=t}
+function getConstraints(){
+ const mode=$('#resolution').value;
+ let video={facingMode:{ideal:$('#cameraSelect').value},width:{ideal:mode==='hd'?1280:mode==='fullhd'?1920:3840},height:{ideal:mode==='hd'?720:mode==='fullhd'?1080:2160},frameRate:{ideal:30,max:60}};
+ return {audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video};
+}
+async function startCamera(){
+ if(!navigator.mediaDevices?.getUserMedia){say('Browser tidak mendukung kamera. Buka halaman melalui HTTPS dan gunakan browser modern.');return}
+ try{
+  if(stream) stopCamera(false);
+  say('Meminta izin kamera dan mikrofon…');
+  stream=await navigator.mediaDevices.getUserMedia(getConstraints());
+  preview.srcObject=stream; await preview.play();
+  $('#camState').textContent='KAMERA AKTIF';$('#liveDot').classList.add('live');
+  $('#photoBtn').disabled=false;$('#recordBtn').disabled=false;$('#startBtn').textContent='↻ Mulai Ulang';
+  const tr=stream.getVideoTracks()[0], settings=tr.getSettings();
+  $('#qualityBadge').textContent=(settings.width||'?')+'×'+(settings.height||'?');
+  say('Kamera aktif. Resolusi aktual: '+(settings.width||'?')+' × '+(settings.height||'?')+'.');
+  applyZoom();
+ }catch(e){say('Kamera tidak dapat diaktifkan: '+(e.name==='NotAllowedError'?'izin kamera/mikrofon ditolak. Izinkan lewat pengaturan situs.':e.name==='NotFoundError'?'kamera atau mikrofon tidak ditemukan.':e.message))}
+}
+function stopCamera(show=true){
+ if(isRecording) stopRecording();
+ if(stream) stream.getTracks().forEach(t=>t.stop());
+ stream=null;preview.srcObject=null;$('#camState').textContent='KAMERA NONAKTIF';$('#liveDot').classList.remove('live');
+ $('#photoBtn').disabled=true;$('#recordBtn').disabled=true;
+ if(show)say('Kamera dihentikan.');
+}
+function applyZoom(){
+ const z=Number($('#zoom').value);$('#zoomOut').value=z.toFixed(1)+'×';
+ preview.style.transform='scaleX('+( $('#cameraSelect').value==='user' ? '-1':'1')+') scale('+z+')';
+}
+function applyFilter(f){
+ currentFilter=f;preview.style.filter=filters[f]+' brightness('+($('#brightness').value/100)+')';
+ $('#filterBadge').textContent=f.toUpperCase();
+ document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b.dataset.filter===f));
+}
+function drawFrame(){
+ const w=preview.videoWidth||1280,h=preview.videoHeight||720;
+ const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+ const c=canvas.getContext('2d');
+ // Mirror the selfie preview in the exported image as well.
+ const mirror=$('#cameraSelect').value==='user';
+ c.save(); if(mirror){c.translate(w,0);c.scale(-1,1)}
+ c.filter=filters[currentFilter]+' brightness('+($('#brightness').value/100)+')';
+ c.drawImage(preview,0,0,w,h);c.restore();
+ return canvas;
+}
+function addItem(blob,type,filename,previewUrl){
+ itemCount++;const wrap=document.createElement('div');wrap.className='item';
+ if(type==='image'){const im=document.createElement('img');im.src=previewUrl;im.alt='Hasil foto';wrap.append(im)}
+ else {const v=document.createElement('video');v.src=previewUrl;v.controls=true;v.playsInline=true;wrap.append(v)}
+ const info=document.createElement('div');info.className='item-info';
+ const strong=document.createElement('strong');strong.textContent=filename;
+ const a=document.createElement('a');a.href=previewUrl;a.download=filename;a.textContent='⬇ Download '+(type==='image'?'Foto':'Video');
+ info.append(strong,a);wrap.append(info);
+ const gallery=$('#gallery');if(itemCount===1)gallery.innerHTML='';gallery.prepend(wrap);
+}
+function takePhoto(){
+ if(!stream||!preview.videoWidth){say('Aktifkan kamera terlebih dahulu.');return}
+ const canvas=drawFrame();
+ canvas.toBlob(blob=>{if(!blob){say('Gagal membuat foto.');return}
+  const url=URL.createObjectURL(blob),name='NEON-CAM-FOTO-'+Date.now()+'.jpg';
+  addItem(blob,'image',name,url);say('Foto berhasil dibuat. Tekan Download Foto untuk menyimpannya.');
+ },'image/jpeg',.96);
+}
+function chooseMime(){
+ return ['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4'].find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t))||'';
+}
+function startRecording(){
+ if(!stream)return;
+ if(!window.MediaRecorder){say('Perekaman video belum didukung browser ini.');return}
+ chunks=[];const mime=chooseMime();
+ try{recorder=new MediaRecorder(stream,mime?{mimeType:mime,videoBitsPerSecond:8000000,audioBitsPerSecond:192000}:undefined)}
+ catch(e){say('Tidak dapat memulai perekaman: '+e.message);return}
+ recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+ recorder.onerror=()=>say('Terjadi kesalahan saat merekam.');
+ recorder.onstop=()=>{
+  const blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'}),url=URL.createObjectURL(blob);
+  const ext=blob.type.includes('mp4')?'mp4':'webm',name='NEON-CAM-VIDEO-'+Date.now()+'.'+ext;
+  addItem(blob,'video',name,url);say('Video selesai direkam. Tekan Download Video untuk menyimpan file.');
+ };
+ recorder.start(250);isRecording=true;startedAt=Date.now();
+ $('#recordBtn').textContent='■ Berhenti';$('#recordBtn').classList.add('recording');$('#recDot').classList.add('live');
+ $('#photoBtn').disabled=true;timerLoop=setInterval(()=>{const s=Math.floor((Date.now()-startedAt)/1000);$('#timer').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},250);
+ say('Sedang merekam video dan suara mikrofon…');
+}
+function stopRecording(){
+ if(!isRecording)return;
+ isRecording=false;if(recorder&&recorder.state!=='inactive')recorder.stop();
+ clearInterval(timerLoop);$('#recordBtn').textContent='● Rekam Video';$('#recordBtn').classList.remove('recording');
+ $('#recDot').classList.remove('live');$('#photoBtn').disabled=!stream;$('#timer').textContent='00:00';
+}
+$('#startBtn').addEventListener('click',startCamera);
+$('#photoBtn').addEventListener('click',takePhoto);
+$('#recordBtn').addEventListener('click',()=>isRecording?stopRecording():startRecording());
+document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>applyFilter(b.dataset.filter)));
+$('#zoom').addEventListener('input',applyZoom);
+$('#brightness').addEventListener('input',()=>{$('#brightOut').value=$('#brightness').value+'%';applyFilter(currentFilter)});
+$('#cameraSelect').addEventListener('change',()=>{applyZoom();if(stream)startCamera()});
+$('#resolution').addEventListener('change',()=>{if(stream)startCamera()});
+$('#clearBtn').addEventListener('click',()=>{if(isRecording){say('Hentikan rekaman sebelum mengosongkan hasil.');return}$('#gallery').innerHTML='<div class="item full"><div class="item-info" style="color:var(--muted)">Galeri dikosongkan.</div></div>';itemCount=0});
+window.addEventListener('pagehide',()=>{if(stream)stream.getTracks().forEach(t=>t.stop())});
+applyFilter('none');$('#brightOut').value='100%';
+</script>
+</body>
+</html>
