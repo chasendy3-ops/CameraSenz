@@ -10,7 +10,7 @@
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#22213b 0%,#0b0c12 43%,var(--bg) 75%);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
 header{padding:20px 18px 12px;max-width:900px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{font-size:20px;font-weight:900;letter-spacing:2px}.brand span{color:var(--cyan);text-shadow:0 0 16px #64f5ff80}.sub{font-size:11px;color:var(--muted);letter-spacing:1.6px}
-main{max-width:900px;margin:auto;padding:8px 14px 30px}.preview-wrap{position:relative;overflow:hidden;border:1px solid #3b4054;border-radius:24px;background:#050609;box-shadow:0 0 0 1px #64f5ff10,0 0 35px #6a56ff20}
+main{max-width:900px;margin:auto;padding:8px 14px 30px}.preview-wrap{position:relative;overflow:hidden;border:1px solid #3b4054;border-radius:24px;background:#050609;box-shadow:0 0 0 1px #64f5ff10,0 0 35px #6a56ff20;transition:aspect-ratio .2s}
 #preview{width:100%;height:min(61vh,570px);min-height:280px;display:block;object-fit:cover;background:#050609;filter:none;transform:scaleX(1)}
 .overlay{position:absolute;inset:0;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:14px}
 .topline,.bottomline{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -27,7 +27,8 @@ button:active{transform:scale(.98)}button:disabled{opacity:.4;cursor:not-allowed
 
 .controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
-select,input[type=range]{width:100%}select{background:#0b0d13;color:var(--text);border:1px solid #34394b;border-radius:11px;padding:11px}
+select,input[type=range],input[type=text]{width:100%}select{background:#0b0d13;color:var(--text);border:1px solid #34394b;border-radius:11px;padding:11px}
+input[type=text]{background:#0b0d13;color:var(--text);border:1px solid #34394b;border-radius:11px;padding:11px}
 .range-row{display:flex;align-items:center;gap:10px}.range-row input{accent-color:var(--cyan)}.range-row output{min-width:38px;text-align:right;color:var(--cyan);font-size:12px}
 .actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-top:12px}
 .action{min-height:58px;font-weight:750}.photo{border-color:#64f5ff80;background:linear-gradient(135deg,#16434b,#17202c);box-shadow:0 0 18px #64f5ff18}.record{border-color:#ff466780;background:linear-gradient(135deg,#48182a,#20131d)}.recording{background:#7b1934;box-shadow:0 0 22px #ff466750}
@@ -39,7 +40,7 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
 <body>
 <header><div><div class="brand">CAMERA <span>SENDY</span></div><div class="sub">HD PHOTO • VIDEO • AUDIO</div></div><div class="pill"><span id="liveDot" class="dot"></span><span id="camState">KAMERA NONAKTIF</span></div></header>
 <main>
- <section class="preview-wrap">
+ <section class="preview-wrap" id="previewWrap">
   <video id="preview" autoplay playsinline muted></video>
   <div class="overlay"><div class="topline"><span class="pill" id="qualityBadge">HD READY</span><span class="pill"><span id="recDot" class="dot"></span><span id="timer">00:00</span></span></div><div class="bottomline"><span class="pill" id="filterBadge">NORMAL</span><span class="pill">CAMERA SENDY</span></div></div>
  </section>
@@ -54,6 +55,10 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
   <button id="startBtn" class="action photo">◉ Aktifkan Kamera</button>
   <button id="photoBtn" class="action" disabled>◎ Ambil Foto</button>
   <button id="recordBtn" class="action record" disabled>● Rekam Video</button>
+ </div>
+ <div class="actions" style="grid-template-columns:1fr 1fr;margin-top:10px">
+  <button id="pauseBtn" class="action" disabled style="border-color:#ffb84d80;background:linear-gradient(135deg,#4a3a18,#201a13)">⏸ Jeda Video</button>
+  <button id="resumeBtn" class="action" disabled style="border-color:#64f5ff80;background:linear-gradient(135deg,#16434b,#17202c)">▶ Lanjutkan</button>
  </div>
  <section class="panel">
   <h2>Filter kamera</h2>
@@ -80,14 +85,21 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
   </div>
  </section>
  <section class="panel">
-  <h2>Pengaturan kualitas</h2>
+  <h2>Pengaturan kualitas & mode</h2>
   <div class="controls">
    <div><label for="cameraSelect">Kamera</label><select id="cameraSelect"><option value="environment">Belakang</option><option value="user">Depan</option></select></div>
    <div><label for="resolution">Resolusi target</label><select id="resolution"><option value="hd">HD 720p</option><option value="fullhd" selected>Full HD 1080p</option><option value="max">Tertinggi perangkat</option></select></div>
+   <div><label for="modeSelect">Mode kamera</label><select id="modeSelect"><option value="portrait">Potret (9:16)</option><option value="landscape" selected>Landscape (16:9)</option></select></div>
    <div><label for="zoom">Zoom digital</label><div class="range-row"><input id="zoom" type="range" min="1" max="3" value="1" step=".1"><output id="zoomOut">1.0×</output></div></div>
    <div><label for="brightness">Kecerahan</label><div class="range-row"><input id="brightness" type="range" min="70" max="140" value="100"><output id="brightOut">100%</output></div></div>
   </div>
   <p class="hint">Kualitas akhir bergantung pada kamera, pencahayaan, browser, dan perangkat. Foto disimpan dengan kualitas JPEG tinggi. Rekaman video memakai filter yang menyatu ke gambar dan dibatasi hingga Full HD/30 FPS agar lebih ringan; hasil tetap bergantung pada perangkat.</p>
+ </section>
+ <section class="panel">
+  <h2>Subtitle video (CC)</h2>
+  <label for="subtitleInput">Teks subtitle (tampil & menyatu ke video)</label>
+  <input id="subtitleInput" type="text" placeholder="Tulis subtitle di sini…" maxlength="120" style="width:100%">
+  <p class="hint">Subtitle akan tampil di pratinjau saat merekam dan dibakar permanen ke video hasil rekaman. Kosongkan untuk menonaktifkan subtitle.</p>
  </section>
  <section class="panel">
   <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px"><h2 style="margin:0">Hasil foto & video</h2><button id="clearBtn" class="smallbtn">Kosongkan</button></div>
@@ -97,8 +109,8 @@ footer{text-align:center;color:#71798d;font-size:11px;padding:22px 12px}
 </main>
 <footer>CAMERA SENDY · Kamera browser dengan efek visual</footer>
 <script>
-const $=s=>document.querySelector(s), preview=$('#preview'), statusEl=$('#status');
-let stream=null, recorder=null, chunks=[], currentFilter='none', isRecording=false, startedAt=0, timerLoop=null, itemCount=0;
+const $=s=>document.querySelector(s), preview=$('#preview'), statusEl=$('#status'), previewWrap=$('#previewWrap');
+let stream=null, recorder=null, chunks=[], currentFilter='none', isRecording=false, isPaused=false, startedAt=0, timerLoop=null, itemCount=0;
 let recordingCanvas=null, recordingCtx=null, recordingFrame=0, recordingCanvasStream=null;
 const filters={
  none:'none',
@@ -119,9 +131,19 @@ const filters={
  cinema:'contrast(1.2) saturate(.82) sepia(.12)'
 };
 function say(t){statusEl.textContent=t}
+
+function getAspect(){
+ const mode=$('#modeSelect').value;
+ if(mode==='portrait') return {w:9,h:16,label:'Potret 9:16'};
+ return {w:16,h:9,label:'Landscape 16:9'};
+}
 function getConstraints(){
  const mode=$('#resolution').value;
- let video={facingMode:{ideal:$('#cameraSelect').value},width:{ideal:mode==='hd'?1280:mode==='fullhd'?1920:3840},height:{ideal:mode==='hd'?720:mode==='fullhd'?1080:2160},frameRate:{ideal:30,max:30}};
+ const asp=getAspect();
+ // request higher base so we can crop to the desired aspect ratio
+ let baseW= mode==='hd'?1280:mode==='fullhd'?1920:3840;
+ let baseH= mode==='hd'?720:mode==='fullhd'?1080:2160;
+ let video={facingMode:{ideal:$('#cameraSelect').value},width:{ideal:baseW},height:{ideal:baseH},frameRate:{ideal:30,max:30}};
  return {audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video};
 }
 async function startCamera(){
@@ -168,18 +190,112 @@ function applyFilter(f){
  $('#filterBadge').textContent=option?option.textContent.split(' — ')[0].toUpperCase():currentFilter.toUpperCase();
  $('#filterSelect').value=currentFilter;
 }
+function updatePreviewAspect(){
+ const asp=getAspect();
+ previewWrap.style.aspectRatio=asp.w+'/'+asp.h;
+ previewWrap.style.maxHeight='80vh';
+ // height will be controlled by aspect-ratio; override inline min-height
+ preview.style.height='100%';
+ preview.style.minHeight='0';
+}
+
+/* -------- drawing helpers -------- */
+function getTargetSize(){
+ const asp=getAspect();
+ // keep source resolution but crop to aspect
+ const srcW=preview.videoWidth||1280, srcH=preview.videoHeight||720;
+ const targetRatio=asp.w/asp.h;
+ const srcRatio=srcW/srcH;
+ let outW,outH;
+ if(srcRatio>targetRatio){ // source wider than target -> crop width
+   outH=srcH;
+   outW=Math.round(srcH*targetRatio);
+ }else{
+   outW=srcW;
+   outH=Math.round(srcW/targetRatio);
+ }
+ // cap at 1920 max dimension for video
+ const scale=Math.min(1,1920/outW,1080/outH);
+ return {w:Math.max(2,Math.floor(outW*scale/2)*2),h:Math.max(2,Math.floor(outH*scale/2)*2),srcW,srcH,targetRatio};
+}
+
 function drawFrame(){
- const w=preview.videoWidth||1280,h=preview.videoHeight||720;
- const canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+ const asp=getAspect();
+ const srcW=preview.videoWidth||1280, srcH=preview.videoHeight||720;
+ const ratio=asp.w/asp.h;
+ let cw=srcW, ch=Math.round(srcW/ratio);
+ if(ch>srcH){ ch=srcH; cw=Math.round(srcH*ratio); }
+ const canvas=document.createElement('canvas');canvas.width=cw;canvas.height=ch;
  const c=canvas.getContext('2d',{alpha:false});
  c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';
- // Mirror the selfie preview in the exported image as well.
  const mirror=$('#cameraSelect').value==='user';
- c.save(); if(mirror){c.translate(w,0);c.scale(-1,1)}
+ c.save();
  c.filter=filters[currentFilter]+' brightness('+($('#brightness').value/100)+')';
- c.drawImage(preview,0,0,w,h);c.restore();
+ // center crop from source
+ const sx=(srcW-cw)/2, sy=(srcH-ch)/2;
+ if(mirror){ c.translate(cw,0); c.scale(-1,1); c.drawImage(preview,sx,sy,cw,ch,0,0,cw,ch); }
+ else { c.drawImage(preview,sx,sy,cw,ch,0,0,cw,ch); }
+ c.restore();
+ drawSubtitleOnCanvas(c,cw,ch);
  return canvas;
 }
+
+function drawSubtitleOnCanvas(ctx,w,h){
+ const text=($('#subtitleInput').value||'').trim();
+ if(!text) return;
+ const base=Math.max(16,Math.round(w*0.032));
+ const fontSize=base;
+ ctx.save();
+ ctx.font='700 '+fontSize+'px system-ui,-apple-system,Segoe UI,Roboto,sans-serif';
+ ctx.textAlign='center';
+ ctx.textBaseline='bottom';
+ const maxWidth=w*0.86;
+ // wrap text
+ const words=text.split(/\s+/);
+ const lines=[]; let line='';
+ for(const word of words){
+   const test=line?line+' '+word:word;
+   if(ctx.measureText(test).width>maxWidth && line){lines.push(line);line=word}else{line=test}
+ }
+ if(line)lines.push(line);
+ const lineH=fontSize*1.35;
+ const totalH=lines.length*lineH;
+ const padX=fontSize*0.6, padY=fontSize*0.35;
+ const boxW=Math.min(maxWidth+padX*2,w*0.92);
+ const boxH=totalH+padY*2;
+ const x=w/2;
+ const y=h - Math.max(12,h*0.06) - boxH;
+ // background pill
+ ctx.fillStyle='rgba(8,9,13,0.72)';
+ const r=Math.min(14,boxH/2);
+ roundRect(ctx,x-boxW/2,y,boxW,boxH,r);
+ ctx.fill();
+ // stroke
+ ctx.lineWidth=Math.max(1,fontSize*0.06);
+ ctx.strokeStyle='rgba(255,255,255,0.18)';
+ roundRect(ctx,x-boxW/2,y,boxW,boxH,r);
+ ctx.stroke();
+ // text
+ ctx.fillStyle='#ffffff';
+ ctx.shadowColor='rgba(0,0,0,0.9)';
+ ctx.shadowBlur=Math.max(2,fontSize*0.12);
+ ctx.shadowOffsetY=1;
+ lines.forEach((ln,i)=>{
+   const ly=y+padY+(i+1)*lineH-fontSize*0.18;
+   ctx.fillText(ln,x,ly,maxWidth);
+ });
+ ctx.restore();
+}
+function roundRect(ctx,x,y,w,h,r){
+ ctx.beginPath();
+ ctx.moveTo(x+r,y);
+ ctx.arcTo(x+w,y,x+w,y+h,r);
+ ctx.arcTo(x+w,y+h,x,y+h,r);
+ ctx.arcTo(x,y+h,x,y,r);
+ ctx.arcTo(x,y,x+w,y,r);
+ ctx.closePath();
+}
+
 function addItem(blob,type,filename,previewUrl){
  itemCount++;const wrap=document.createElement('div');wrap.className='item';
  if(type==='image'){const im=document.createElement('img');im.src=previewUrl;im.alt='Hasil foto';wrap.append(im)}
@@ -202,17 +318,24 @@ function chooseMime(){
  return ['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm','video/mp4'].find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t))||'';
 }
 function drawRecordingFrame(){
- if(!isRecording || !recordingCtx || !preview.videoWidth){return}
+ if(!isRecording || isPaused || !recordingCtx || !preview.videoWidth){ recordingFrame=requestAnimationFrame(drawRecordingFrame); return; }
  const w=recordingCanvas.width,h=recordingCanvas.height;
  try{
   recordingCtx.save();
   recordingCtx.clearRect(0,0,w,h);
   recordingCtx.filter=(filters[currentFilter]||'none')+' brightness('+($('#brightness').value/100)+')';
+  const srcW=preview.videoWidth, srcH=preview.videoHeight;
+  const ratio=w/h;
+  let cw=srcW,ch=Math.round(srcW/ratio);
+  if(ch>srcH){ch=srcH;cw=Math.round(srcH*ratio);}
+  const sx=(srcW-cw)/2, sy=(srcH-ch)/2;
   if($('#cameraSelect').value==='user'){
    recordingCtx.translate(w,0);recordingCtx.scale(-1,1);
   }
-  recordingCtx.drawImage(preview,0,0,w,h);
+  recordingCtx.drawImage(preview,sx,sy,cw,ch,0,0,w,h);
   recordingCtx.restore();
+  // subtitle burnt into recording
+  drawSubtitleOnCanvas(recordingCtx,w,h);
  }catch(e){}
  recordingFrame=requestAnimationFrame(drawRecordingFrame);
 }
@@ -221,12 +344,15 @@ function startRecording(){
  if(!window.MediaRecorder){say('Perekaman video belum didukung browser ini.');return}
  chunks=[];
  try{
-  // Cap the recording canvas at Full HD to reduce lag on phones, even if the camera is 4K.
-  const sourceW=preview.videoWidth||1280,sourceH=preview.videoHeight||720;
-  const scale=Math.min(1,1920/sourceW,1080/sourceH);
+  const asp=getAspect();
+  const srcW=preview.videoWidth||1280, srcH=preview.videoHeight||720;
+  const ratio=asp.w/asp.h;
+  let cw=srcW,ch=Math.round(srcW/ratio);
+  if(ch>srcH){ch=srcH;cw=Math.round(srcH*ratio);}
+  const scale=Math.min(1,1920/cw,1080/ch);
   recordingCanvas=document.createElement('canvas');
-  recordingCanvas.width=Math.max(2,Math.floor(sourceW*scale/2)*2);
-  recordingCanvas.height=Math.max(2,Math.floor(sourceH*scale/2)*2);
+  recordingCanvas.width=Math.max(2,Math.floor(cw*scale/2)*2);
+  recordingCanvas.height=Math.max(2,Math.floor(ch*scale/2)*2);
   recordingCtx=recordingCanvas.getContext('2d',{alpha:false,desynchronized:true});
   recordingCtx.imageSmoothingEnabled=true;recordingCtx.imageSmoothingQuality='high';
   recordingCanvasStream=recordingCanvas.captureStream(30);
@@ -242,34 +368,55 @@ function startRecording(){
   if(recordingCanvasStream)recordingCanvasStream.getTracks().forEach(t=>t.stop());
   const blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'}),url=URL.createObjectURL(blob);
   const ext=blob.type.includes('mp4')?'mp4':'webm',name='CAMERA-SENDY-VIDEO-'+Date.now()+'.'+ext;
-  addItem(blob,'video',name,url);say('Video selesai direkam. Filter '+currentFilter.toUpperCase()+' sudah menyatu ke video. Tekan Download Video untuk menyimpan file.');
+  addItem(blob,'video',name,url);say('Video selesai direkam. Filter & subtitle sudah menyatu ke video. Tekan Download Video untuk menyimpan file.');
  };
- isRecording=true;
+ isRecording=true; isPaused=false;
  recordingFrame=requestAnimationFrame(drawRecordingFrame);
  recorder.start(1000);startedAt=Date.now();
  $('#recordBtn').textContent='■ Berhenti';$('#recordBtn').classList.add('recording');$('#recDot').classList.add('live');
- $('#photoBtn').disabled=true;timerLoop=setInterval(()=>{const s=Math.floor((Date.now()-startedAt)/1000);$('#timer').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},250);
+ $('#photoBtn').disabled=true;
+ $('#pauseBtn').disabled=false; $('#resumeBtn').disabled=true;
+ timerLoop=setInterval(()=>{if(isPaused)return;const s=Math.floor((Date.now()-startedAt)/1000);$('#timer').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},250);
  say('Merekam video dengan filter tertanam dan audio mikrofon. Untuk mengurangi lag, hasil video dibatasi maksimal Full HD / 30 FPS.');
 }
 function stopRecording(){
  if(!isRecording)return;
- isRecording=false;if(recorder&&recorder.state!=='inactive')recorder.stop();
+ isRecording=false;isPaused=false;
+ if(recorder&&recorder.state!=='inactive')recorder.stop();
  else {cancelAnimationFrame(recordingFrame);if(recordingCanvasStream)recordingCanvasStream.getTracks().forEach(t=>t.stop())}
  clearInterval(timerLoop);$('#recordBtn').textContent='● Rekam Video';$('#recordBtn').classList.remove('recording');
  $('#recDot').classList.remove('live');$('#photoBtn').disabled=!stream;$('#timer').textContent='00:00';
+ $('#pauseBtn').disabled=true; $('#resumeBtn').disabled=true;
 }
+function pauseRecording(){
+ if(!isRecording||isPaused||!recorder)return;
+ try{ recorder.pause(); }catch(e){}
+ isPaused=true;
+ $('#pauseBtn').disabled=true; $('#resumeBtn').disabled=false;
+ say('Rekaman dijeda. Tekan Lanjutkan untuk melanjutkan tanpa membuat file baru.');
+}
+function resumeRecording(){
+ if(!isRecording||!isPaused||!recorder)return;
+ try{ recorder.resume(); }catch(e){}
+ isPaused=false;
+ $('#pauseBtn').disabled=false; $('#resumeBtn').disabled=true;
+ say('Merekam video dengan filter tertanam dan audio mikrofon.');
+}
+
 $('#startBtn').addEventListener('click',startCamera);
 $('#permissionBtn').addEventListener('click',startCamera);
-// Request browser permission when the page opens. Browsers may require a secure
-// context or a user gesture; the visible button remains as a reliable fallback.
-window.addEventListener('DOMContentLoaded',()=>{startCamera()});
+window.addEventListener('DOMContentLoaded',()=>{startCamera(); updatePreviewAspect();});
 $('#photoBtn').addEventListener('click',takePhoto);
 $('#recordBtn').addEventListener('click',()=>isRecording?stopRecording():startRecording());
+$('#pauseBtn').addEventListener('click',pauseRecording);
+$('#resumeBtn').addEventListener('click',resumeRecording);
 $('#filterSelect').addEventListener('change',e=>applyFilter(e.target.value));
 $('#zoom').addEventListener('input',applyZoom);
 $('#brightness').addEventListener('input',()=>{$('#brightOut').value=$('#brightness').value+'%';applyFilter(currentFilter)});
 $('#cameraSelect').addEventListener('change',()=>{applyZoom();if(stream)startCamera()});
 $('#resolution').addEventListener('change',()=>{if(stream)startCamera()});
+$('#modeSelect').addEventListener('change',()=>{updatePreviewAspect();if(stream)startCamera()});
+$('#subtitleInput').addEventListener('input',()=>{ /* live preview handled at draw time */ });
 $('#clearBtn').addEventListener('click',()=>{if(isRecording){say('Hentikan rekaman sebelum mengosongkan hasil.');return}$('#gallery').innerHTML='<div class="item full"><div class="item-info" style="color:var(--muted)">Galeri dikosongkan.</div></div>';itemCount=0});
 window.addEventListener('pagehide',()=>{if(stream)stream.getTracks().forEach(t=>t.stop())});
 applyFilter('none');$('#brightOut').value='100%';
