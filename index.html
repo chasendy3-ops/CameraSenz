@@ -3181,46 +3181,59 @@ const Game = {
   async joinPublicServer() {
     const s = this.state;
     if (s.mabarActive) { this.showToast('Kamu sudah berada di server online.'); return; }
-    initFirebaseMabar();
-    if (!firebaseMabarReady || !mabarDB) { this.showToast('❌ Server online belum siap. Coba lagi sebentar.'); return; }
+    if (s._publicJoinBusy) return;
+    s._publicJoinBusy = true;
     const publicCode = 'PUBLIC_GLOBAL';
     const myId = s.anonymousUserId;
-    try {
+    const now = Date.now();
+    this.showToast('⚡ Menyiapkan game dan menghubungkan server...');
+
+    // Jalankan inisialisasi dunia dan koneksi server secara bersamaan agar waktu tunggu tidak berurutan.
+    const worldPromise = s.started ? Promise.resolve() : this.startNew();
+    const connectPromise = (async () => {
+      initFirebaseMabar();
+      if (!firebaseMabarReady || !mabarDB) throw new Error('Server online belum siap');
       const roomRef = mabarDB.ref('rooms/' + publicCode);
       const snap = await roomRef.once('value');
       const data = snap.val() || {};
-      const players = data.players || {};
-      // Remove clearly stale sessions and cap the public server at 20 players.
-      const now = Date.now();
-      for (const [pid, player] of Object.entries(players)) {
-        if (pid !== myId && player.lastActive && now - player.lastActive > 120000) {
-          await roomRef.child('players/' + pid).remove().catch(()=>{});
-        }
+      const allPlayers = data.players || {};
+      const activePlayers = Object.entries(allPlayers).filter(([pid, player]) =>
+        pid === myId || !player.lastActive || now - player.lastActive <= 120000
+      );
+      if (!activePlayers.some(([pid]) => pid === myId) && activePlayers.length >= 20) {
+        throw new Error('Server public penuh (20/20). Coba lagi nanti.');
       }
-      const freshSnap = await roomRef.child('players').once('value');
-      const freshPlayers = freshSnap.val() || {};
-      if (!freshPlayers[myId] && Object.keys(freshPlayers).length >= 20) {
-        this.showToast('❌ Server public penuh (20/20). Coba lagi nanti.'); return;
-      }
-      await roomRef.update({name:'SERVER PUBLIC GLOBAL', status:'playing', maxPlayers:20, public:true, updatedAt:now});
-      await roomRef.child('players/' + myId).set({
+      const playerData = {
         nickname:s.nickname || 'Player', joinedAt:now, lastActive:now,
         gender:s.gender, outfit:s.outfit, hat:s.hat, jualan:s.jualanItems || [],
         position:{x:-40,y:0,z:14}, rotation:Math.PI, role:'public-player'
-      });
-      if (roomRef.child('players/' + myId).onDisconnect) {
-        roomRef.child('players/' + myId).onDisconnect().remove().catch(()=>{});
-      }
-      s.currentRoomCode = publicCode;
-      s.roomHostId = data.host || 'PUBLIC_GLOBAL';
+      };
+      // Satu write gabungan mengurangi round-trip jaringan saat masuk server.
+      const updates = {
+        name:'SERVER PUBLIC GLOBAL', status:'playing', maxPlayers:20, public:true, updatedAt:now
+      };
+      await Promise.all([
+        roomRef.update(updates),
+        roomRef.child('players/' + myId).set(playerData)
+      ]);
+      roomRef.child('players/' + myId).onDisconnect().remove().catch(()=>{});
+      return { publicCode, data, activePlayers };
+    })();
+
+    try {
+      const [_, joined] = await Promise.all([worldPromise, connectPromise]);
+      s.currentRoomCode = joined.publicCode;
+      s.roomHostId = joined.data.host || 'PUBLIC_GLOBAL';
       s.isHost = false;
       s.publicServerMode = true;
-      s.roomPlayers = freshPlayers;
+      s.roomPlayers = Object.fromEntries(joined.activePlayers);
       this.showToast('🌐 Terhubung ke SERVER PUBLIC GLOBAL!');
       this.enterMabarGame();
     } catch (e) {
       console.error('Public server join error', e);
-      this.showToast('❌ Gagal masuk server public. Periksa koneksi internet.');
+      this.showToast('❌ ' + (e && e.message ? e.message : 'Gagal masuk server public. Periksa koneksi internet.'));
+    } finally {
+      s._publicJoinBusy = false;
     }
   },
   enterMabarGame() {
