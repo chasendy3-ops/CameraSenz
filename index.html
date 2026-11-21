@@ -206,6 +206,32 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; font-fam
 .room-player-item .add-friend-mini:active,
 .room-player-item .invite-mini:active { transform:scale(.95); }
 
+#adminPanel { position:fixed; inset:0; background:linear-gradient(160deg,#101827,#062018); z-index:600; display:none; align-items:center; justify-content:center; padding:16px; color:#fff; overflow-y:auto; }
+#adminPanel.active { display:flex; }
+#adminHudBtn { position:fixed; right:12px; top:66px; z-index:120; display:none; border:2px solid #ff9a9a; border-radius:12px; padding:10px 13px; background:linear-gradient(135deg,#991b1b,#ef4444); color:#fff; font-weight:900; box-shadow:0 0 18px #ef444466; pointer-events:auto; touch-action:manipulation; }
+#adminHudBtn.visible { display:block; }
+#vipPanel { position:fixed; inset:0; z-index:610; display:none; align-items:center; justify-content:center; padding:16px; overflow:auto; background:linear-gradient(160deg,#10251a,#062018); color:#fff; }
+#vipPanel.active { display:flex; }
+.vip-box { width:100%; max-width:440px; max-height:92vh; overflow:auto; border:2px solid #a78bfa; border-radius:18px; padding:18px; background:#080b12f2; box-shadow:0 0 25px #8b5cf644; }
+.vip-box h2 { text-align:center; color:#c4b5fd; margin:0 0 12px; }
+.vip-box input { width:100%; box-sizing:border-box; padding:12px; margin:5px 0; border-radius:10px; border:1px solid #a78bfa; background:#101018; color:#fff; }
+.admin-list-item { display:block; }
+.admin-account-head { display:flex;justify-content:space-between;gap:8px;align-items:flex-start; }
+.admin-account-actions { display:flex; flex-wrap:wrap; gap:5px; margin-top:8px; }
+.admin-account-actions button { border:0;border-radius:7px;padding:7px 9px;color:#fff;font-size:11px;font-weight:bold;cursor:pointer;background:#0e7490; }
+.admin-account-actions .money { background:#15803d; }
+.admin-account-actions .ban { background:#b91c1c; }
+.admin-account-actions .vip { background:#7c3aed; }
+.admin-account-actions .vip { min-height:44px; min-width:145px; padding:11px 14px; font-size:13px; flex:1 1 145px; touch-action:manipulation; }
+.admin-account-actions button { min-height:40px; padding:10px 12px; touch-action:manipulation; }
+.admin-list-item.dev-friend { border:2px solid #22d3ee; background:linear-gradient(90deg,#083344,#ffffff0d); }
+.admin-friend-label { display:inline-block; margin:4px 0; padding:4px 8px; border-radius:8px; background:#0e7490; color:#fff; font-size:10px; font-weight:bold; }
+
+.admin-box { width:100%; max-width:620px; max-height:92vh; overflow:auto; background:rgba(0,0,0,.6); border:2px solid #ffd700; border-radius:18px; padding:18px; box-shadow:0 0 28px #ffd70033; }
+.admin-box h2 { color:#ffd700; text-align:center; margin:0 0 12px; }
+.admin-box input { width:100%; box-sizing:border-box; padding:12px; margin:5px 0; border-radius:10px; border:1px solid #bba13b; background:#101010; color:#fff; }
+.admin-note { font-size:12px; line-height:1.5; color:#cbd5e1; background:#ffffff0d; border-radius:10px; padding:10px; margin:10px 0; }
+.admin-list-item { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:9px; margin:5px 0; border-radius:9px; background:#ffffff0d; font-size:12px; }
 #authPanel { position:fixed; inset:0; background:linear-gradient(160deg,#062018,#0d3b66); z-index:350; display:none; align-items:center; justify-content:center; padding:20px; color:#fff; }
 #authPanel.active { display:flex; }
 .auth-box { background:rgba(0,0,0,.4); border:2px solid #ffd700; border-radius:18px; padding:22px; width:100%; max-width:380px; }
@@ -303,6 +329,17 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; font-fam
 #notifPanel .nItem .nActions button { flex:1; padding:7px 10px; border:none; border-radius:8px; font-size:12px; font-weight:bold; cursor:pointer; color:#fff; }
 #notifPanel .nItem .nActions .accept { background:linear-gradient(90deg,#16a34a,#22c55e); }
 #notifPanel .nItem .nActions .reject { background:linear-gradient(90deg,#a02020,#d63030); }
+#notifPanel .nItem .nActions .claim { background:linear-gradient(90deg,#d97706,#facc15); color:#241500; }
+#emailBoxPanel { position:fixed; top:70px; right:8px; width:360px; max-width:calc(100vw - 16px); max-height:68vh; background:rgba(10,20,30,.98); border:2px solid #38bdf8; border-radius:14px; z-index:151; display:none; flex-direction:column; box-shadow:0 8px 30px rgba(0,0,0,.7); }
+#emailBoxPanel.active { display:flex; }
+#emailBoxPanel .eHeader { background:linear-gradient(90deg,#0369a1,#0891b2); padding:10px 14px; border-radius:12px 12px 0 0; color:#fff; font-weight:bold; display:flex; justify-content:space-between; align-items:center; }
+#emailBoxList { overflow:auto; padding:10px; }
+.email-item { background:rgba(255,255,255,.07); border-left:3px solid #38bdf8; border-radius:8px; padding:10px; margin-bottom:8px; color:#fff; font-size:13px; }
+.email-item .email-meta { color:#8ecae6; font-size:11px; margin-bottom:5px; }
+.email-item .email-body { white-space:pre-wrap; line-height:1.45; overflow-wrap:anywhere; }
+#emailVipCompose { padding:10px; border-top:1px solid rgba(255,255,255,.15); display:none; }
+#emailVipCompose textarea { width:100%; min-height:65px; resize:vertical; border-radius:8px; padding:8px; color:#fff; background:#17212b; border:1px solid #38bdf8; }
+#emailVipCompose button { margin-top:6px; width:100%; padding:9px; border:0; border-radius:8px; font-weight:bold; background:#7c3aed; color:#fff; }
 
 #sholatModal .modal-box { max-width:560px; }
 .sholatRow { display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,.06); padding:12px 14px; border-radius:10px; margin-bottom:8px; border-left:4px solid #1e8449; }
@@ -415,9 +452,12 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; font-fam
     <button class="sbtn gold" onclick="Game.openAuth('login')">🔑 MASUK / LOGIN</button>
     <button class="sbtn blue" onclick="Game.openAuth('register')">📝 DAFTAR AKUN BARU</button>
     <button class="sbtn dark" onclick="Game.playOffline()">🎮 MAIN OFFLINE</button>
+    <button class="sbtn pink" onclick="Game.editNickname()">✏️ ATUR NAMA PANGGILAN</button>
     <button class="sbtn" style="background:#168447;border-color:#4ade80" onclick="Game.joinPublicServer()">🌐 JOIN SERVER PUBLIC</button>
     <button class="sbtn dark" style="background:#d92323;border-color:#ff6666" onclick="window.open('https://www.youtube.com/@SendyHost','_blank','noopener')">▶️ YOUTUBE — SendyYT</button>
     <button class="sbtn dark" onclick="Game.showHowTo()">❓ CARA BERMAIN</button>
+    <button class="sbtn gold" onclick="Game.openAdminLogin()">🛡️ LOGIN AKUN ADMIN</button>
+    <button class="sbtn" style="background:linear-gradient(90deg,#6d28d9,#a78bfa);border-color:#c4b5fd" onclick="Game.openVipLogin()">⭐ LOGIN VIP</button>
   </div>
 </div>
 
@@ -436,9 +476,59 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; font-fam
     <div id="authFields"></div>
     <div class="err" id="authErr"></div>
     <button class="mbtn gold" id="authSubmit" onclick="Game.submitAuth()">MASUK</button>
+    <div class="auth-divider"><span>ATAU</span></div>
+    <button class="mbtn google-login-btn" id="googleLoginBtn" onclick="Game.loginWithGoogle()"><span class="google-g">G</span> LANJUTKAN DENGAN GOOGLE</button>
     <div class="toggle-txt" onclick="Game.closeAuth()">← Kembali ke Menu</div>
   </div>
 </div>
+
+<div id="adminPanel" aria-modal="true" role="dialog">
+  <div class="admin-box">
+    <h2>🛡️ LOGIN AKUN ADMIN</h2>
+    <div id="adminLoginForm">
+      <p style="text-align:center;font-size:12px;color:#9fd6ff">Masuk memakai akun Firebase Admin yang sudah terdaftar.</p>
+      <input id="adminEmail" type="email" autocomplete="username" placeholder="Email admin">
+      <input id="adminPassword" type="password" autocomplete="current-password" placeholder="Password admin">
+      <div id="adminErr" style="min-height:18px;color:#ff8c8c;font-size:12px;text-align:center"></div>
+      <button class="mbtn gold" id="adminLoginSubmit" onclick="Game.submitAdminLogin()">MASUK SEBAGAI ADMIN</button>
+    </div>
+    <div id="adminDashboard" style="display:none">
+      <div style="color:#7cf0b0;text-align:center;font-weight:bold" id="adminWelcome">Admin terautentikasi</div>
+      <div class="admin-note"><b>Panel Developer / Kepala Sekolah</b><br>Login Firebase berhasil. Daftar akun di bawah hanya untuk pemantauan. Give money, ban, VIP, dan bangunan permanen harus diotorisasi melalui Firebase Security Rules atau backend tepercaya agar tidak bisa dipalsukan dari browser pemain.</div>
+      <button class="mbtn red" onclick="Game.adminEnterPublicGame();Game.closeAdminPanel()">🎮 MASUK KE SERVER PUBLIC</button>
+      <button class="mbtn cyan" onclick="Game.adminRefreshAccounts()">🔄 MUAT ULANG DAFTAR AKUN</button>
+      <div class="admin-note" style="margin-top:10px"><b>⭐ JADI VIP LEWAT ID AKUN GAME</b><br>Masukkan ID Game 6 digit milik pemain. Status VIP akan disimpan ke akun dan pemberitahuan dikirim ke Notifikasi MABAR Online.</div>
+      <input id="adminVipAccountId" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="Masukkan ID Akun Game (6 digit)" style="width:100%;box-sizing:border-box;padding:13px;border-radius:10px;border:1px solid #b99b38;background:#172b39;color:#fff;font-size:16px;margin:6px 0">
+      <button class="mbtn gold" onclick="Game.adminGrantVipByAccountId()">⭐ JADIKAN VIP VIA ID AKUN</button>
+      <div id="adminVipIdStatus" style="font-size:12px;color:#9fd6ff;min-height:18px;text-align:center"></div>
+      <div id="adminAccountsList" style="max-height:360px;overflow:auto;margin-top:8px"></div>
+      <h3 style="color:#ffd700;font-size:14px;margin:14px 0 5px">⭐ SISTEM VIP</h3>
+      <div class="admin-note">Rencana fitur VIP: bangunan kelas pribadi, peran guru di server publik, dan chat khusus developer. Status VIP belum diberikan otomatis; perlu aturan keamanan server agar hak VIP tetap sah saat pemain berganti perangkat.</div>
+    </div>
+    <button class="mbtn alt" onclick="Game.closeAdminPanel()">TUTUP / KEMBALI</button>
+  </div>
+</div>
+<div id="vipPanel" aria-modal="true" role="dialog">
+  <div class="vip-box">
+    <h2>⭐ LOGIN AKUN VIP</h2>
+    <div id="vipLoginForm">
+      <p style="font-size:12px;color:#ddd;line-height:1.5">Masuk memakai akun yang sudah diberi status VIP oleh Developer.</p>
+      <input id="vipEmail" type="email" autocomplete="username" placeholder="Email akun VIP">
+      <input id="vipPassword" type="password" autocomplete="current-password" placeholder="Password">
+      <div id="vipErr" style="min-height:18px;color:#fca5a5;font-size:12px;text-align:center"></div>
+      <button class="mbtn" style="background:linear-gradient(90deg,#6d28d9,#a78bfa)" onclick="Game.submitVipLogin()">MASUK SEBAGAI VIP</button>
+    </div>
+    <div id="vipDashboard" style="display:none">
+      <div id="vipWelcome" style="text-align:center;color:#c4b5fd;font-weight:bold"></div>
+      <div class="admin-note">Fitur VIP: mode guru di Server Public, permintaan kelas pribadi, dan chat Developer. Ketersediaan lintas perangkat memerlukan aturan database/backend.</div>
+      <button class="mbtn" onclick="Game.vipToggleTeacher()">🎓 AKTIFKAN / NONAKTIFKAN MODE GURU</button>
+      <button class="mbtn cyan" onclick="Game.vipPlaceClassAtPlayer()">🏫 TEMPATKAN KELAS DI POSISI SAYA</button>
+      <button class="mbtn" style="background:#7c3aed" onclick="Game.vipChatDeveloper()">💬 CHAT DEVELOPER</button>
+    </div>
+    <button class="mbtn alt" onclick="Game.closeVipPanel()">TUTUP / KEMBALI</button>
+  </div>
+</div>
+<button id="adminHudBtn" onclick="Game.openAdminTools()">🛡️ MENU DEVELOPER</button>
 
 <canvas id="gameCanvas"></canvas>
 
@@ -474,6 +564,7 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; font-fam
   <div class="topbtns">
     <button class="iconbtn mabar-highlight" data-action="mabar" title="Mabar Online">🎮<span style="font-size:8px;font-weight:bold">MABAR</span></button>
     <button class="iconbtn" onclick="Game.openInviteMenu()" title="Undang Teman">📨</button>
+    <button class="iconbtn" onclick="Game.openEmailBox()" title="Email Box">✉️<span style="font-size:8px;font-weight:bold">EMAIL</span></button>
     <button class="iconbtn notif-btn" id="notifBtn" onclick="Game.toggleNotifPanel()" title="Notifikasi">🔔<span class="notif-count" id="notifCount" style="display:none">0</span></button>
     <button class="iconbtn" title="Daftar Teman" onclick="Game.openFriendList()">👥</button>
     <button class="iconbtn" data-action="profile" title="Profil">👤</button>
@@ -489,11 +580,19 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; font-fam
 <div id="notifPanel">
   <div class="nHeader">
     <span>🔔 Notifikasi</span>
-    <button onclick="Game.toggleNotifPanel()">✕</button>
+    <div style="display:flex;gap:6px;align-items:center">
+      <button onclick="Game.clearAllNotifications()" title="Hapus semua notifikasi" style="font-size:11px;padding:6px 8px;background:#b91c1c;color:#fff;border-radius:8px">🗑️ HAPUS SEMUA NOTIFIKASI</button>
+      <button onclick="Game.toggleNotifPanel()">✕</button>
+    </div>
   </div>
   <div class="nList" id="notifList">
     <div class="nEmpty">Belum ada notifikasi</div>
   </div>
+</div>
+<div id="emailBoxPanel">
+  <div class="eHeader"><span>✉️ MENU EMAIL BOX</span><button onclick="Game.closeEmailBox()" style="background:none;border:0;color:#fff;font-size:20px">✕</button></div>
+  <div id="emailBoxList"><div class="nEmpty">Memuat pesan...</div></div>
+  <div id="emailVipCompose"><textarea id="emailVipMessage" maxlength="1000" placeholder="Tulis pesan untuk Developer (khusus VIP)..."></textarea><button onclick="Game.sendEmailToDeveloper()">📨 KIRIM PESAN KE DEVELOPER</button></div>
 </div>
 
 <div id="touchControls">
@@ -687,6 +786,8 @@ html, body { width:100%; height:100%; overflow:hidden; background:#000; font-fam
     <input type="range" id="camSens" min="0.3" max="2.5" step="0.1" value="1.0" style="width:100%">
     <label>Kualitas Grafis</label>
     <select id="qualitySel"><option value="low">Rendah</option><option value="med" selected>Sedang</option><option value="high">Tinggi</option></select>
+    <label>🏷️ Tag Name Diri Sendiri</label>
+    <select id="ownNameTagSel"><option value="show">👁️ LIHAT TAG NAME DIRI SENDIRI</option><option value="hide">🙈 SEMBUNYIKAN TAG NAME DIRI SENDIRI</option></select>
     <label>🕐 Siklus Waktu</label>
     <select id="timeCycleSel">
       <option value="realtime" selected>Realtime (Waktu Dunia)</option>
@@ -953,7 +1054,7 @@ const Game = {
     gameTime:0, day:1, timeCycle: 'realtime',
     playerObj:null, player:null, npcs:[], collidables:[], 
     camMode:'third', camSens:1.0, quality:'med',
-    money:50000, kelas:1, nickname:'Murid', gender:'male',
+    money:50000, kelas:1, nickname:'Player', gender:'male', isAdmin:false, isVip:false, vipTeacher:false, showOwnNameTag:true,
     outfit:'seragam', hat:'peci_hitam', acc:'tas',
     tasks:{}, progress:{tilawah:0, hafalan:0, menulis:0, disiplin:0, sosial:0, makan:0, kuis:0},
     dialogActive:false, currentDialogNPC:null,
@@ -972,7 +1073,7 @@ const Game = {
     flashlight:false, flashlightSpot:null, flashlightPoint:null,
     adzanActive:false, lastPrayerFired:{}, hudClockUpdate:0,
     currentRoomCode:null, roomPlayersListener:null, roomPlayers:null, publicServerMode:false,
-    anonymousUserId:'anon_'+Math.random().toString(36).substr(2,9),
+    anonymousUserId:(() => { try { let id = sessionStorage.getItem('sekolah_muslim_public_player_id'); if (!id) { id = 'anon_' + Math.random().toString(36).slice(2,11); sessionStorage.setItem('sekolah_muslim_public_player_id', id); } return id; } catch (e) { return 'anon_' + Math.random().toString(36).slice(2,11); } })(),
     _mabarBusy:false, mabarActive: false, mabarPlayers: {},
     mabarPositionInterval: null, mabarLastSendPos: {x:0,z:0},
     isHost: false, roomHostId: null,
@@ -987,6 +1088,7 @@ const Game = {
     mengajiActive: false, mengajiSurah: 'Al-Fatihah', mengajiAyat: 0,
     jualanItems: [],
     notifications: [], notifPanelOpen: false, _seenNotifKeys: {},
+    adminGiftsListener:null, emailBoxListener:null, adminEmailListener:null, _seenGiftKeys:{}, _seenEmailKeys:{}, emailBoxOpen:false, emailMessages:[],
     quizActive: false, quizSubject: null, quizQuestions: [], quizIndex: 0,
     quizScore: 0, quizAnswered: false, quizFinished: false,
     bookOpen: false,
@@ -1003,6 +1105,7 @@ const Game = {
     directChatListener: null
   },
   _geoCache:{}, _matCache:{}, _colorCache:{},
+  _adminUser:null,
 
   _getBoxGeo(w,h,d) {
     const k = w+'_'+h+'_'+d;
@@ -1070,6 +1173,9 @@ const Game = {
             this.state.userId = user.uid;
             this.state.userEmail = user.email;
             this.state.isLoggedIn = true;
+            this.state.userId = user.uid; this.state.userEmail = user.email;
+            if (mabarDB && this.state.accountId) mabarDB.ref('accounts/'+this.state.accountId).update({email:user.email,userId:user.uid,nickname:user.displayName||user.email.split('@')[0],accountId:this.state.accountId,lastSeen:Date.now()}).catch(()=>{});
+            if (mabarDB && this.state.accountId) this.listenForDeveloperGiftsAndEmails();
             const display = user.displayName || user.email.split('@')[0];
             document.getElementById('mainBtns').innerHTML = `
               <div class="user-info">✅ Login: <b>${display}</b></div>
@@ -1079,6 +1185,8 @@ const Game = {
               <button class="sbtn pink" onclick="Game.openOutfit()">👕 GANTI PAKAIAN</button>
               <button class="sbtn dark" onclick="Game.logout()">🚪 LOGOUT</button>
               <button class="sbtn dark" onclick="Game.showHowTo()">❓ CARA BERMAIN</button>
+              <button class="sbtn gold" onclick="Game.openAdminLogin()">🛡️ LOGIN AKUN ADMIN</button>
+              <button class="sbtn" style="background:linear-gradient(90deg,#6d28d9,#a78bfa);border-color:#c4b5fd" onclick="Game.openVipLogin()">⭐ LOGIN VIP</button>
             `;
           }
         });
@@ -1117,8 +1225,9 @@ const Game = {
     if (!s.accountId) s.accountId = this.generateAccountId();
     // Daftarkan akun ke DB
     mabarDB.ref('accounts/'+s.accountId).update({
-      nickname: s.nickname, lastSeen: Date.now()
+      nickname: s.nickname, lastSeen: Date.now(), userId: s.userId || null, email: s.userEmail || null, accountId: s.accountId
     }).catch(()=>{});
+    this.listenForDeveloperGiftsAndEmails();
     // Listener friend list
     if (s.friendsListener) s.friendsListener.off();
     s.friendsListener = mabarDB.ref('accounts/'+s.accountId+'/friends');
@@ -1140,6 +1249,100 @@ const Game = {
       if (!inv) return;
       this.addRoomInviteNotification(inv, key);
     });
+  },
+  listenForDeveloperGiftsAndEmails() {
+    const s=this.state; if(!s.accountId) return;
+    initFirebaseMabar(); if(!mabarDB) return;
+    if(s.adminVipNoticeListener) s.adminVipNoticeListener.off();
+    s.adminVipNoticeListener=mabarDB.ref('accounts/'+s.accountId+'/mabarNotifications');
+    s.adminVipNoticeListener.on('child_added', snap=>{
+      const key=snap.key, notice=snap.val()||{}; if(!key||s._seenAdminVipNoticeKeys?.[key]) return;
+      s._seenAdminVipNoticeKeys=s._seenAdminVipNoticeKeys||{}; s._seenAdminVipNoticeKeys[key]=true;
+      const id='admin_vip_'+key; if(s.notifications.some(n=>n.id===id)) return;
+      s.notifications.push({id,title:notice.title||'⭐ STATUS VIP DIPERBARUI',body:notice.body||'Developer telah memberikan status VIP kepada akun Anda.',ts:notice.ts||Date.now(),unread:true,data:{type:'admin_vip_notice'}});
+      this.updateNotifBadge(); if(s.notifPanelOpen) this.renderNotifList();
+      this.showToast('⭐ Pemberitahuan VIP dari Developer masuk ke Notifikasi MABAR!');
+    });
+    if(s.adminGiftsListener) s.adminGiftsListener.off();
+    s.adminGiftsListener=mabarDB.ref('accounts/'+s.accountId+'/adminGifts');
+    s.adminGiftsListener.on('child_added', snap=>{
+      const key=snap.key, gift=snap.val()||{}; if(!key||s._seenGiftKeys[key]) return;
+      s._seenGiftKeys[key]=true;
+      const id='gift_'+key;
+      if(s.notifications.some(n=>n.id===id)) return;
+      s.notifications.push({id,title:'💰 HADIAH UANG DARI DEVELOPER',body:gift.claimed?'Hadiah uang ini sudah diklaim.':`Developer mengirim Rp${(Number(gift.amount)||0).toLocaleString('id-ID')}. Tekan CLAIM untuk memasukkan uang ke saldo.`,ts:gift.createdAt||Date.now(),unread:!gift.claimed,data:{type:'admin_gift',giftKey:key,amount:Number(gift.amount)||0,claimed:gift.claimed===true,from:gift.from||'Developer'}});
+      this.updateNotifBadge(); if(s.notifPanelOpen) this.renderNotifList();
+      if(!gift.claimed) this.showToast('💰 Hadiah uang dari Developer tersedia di Notifikasi MABAR!');
+    });
+    // Inbox khusus akun game (termasuk pemain yang belum menghubungkan email Firebase)
+    if(s.emailBoxListener) s.emailBoxListener.off();
+    s.emailBoxListener=mabarDB.ref('accounts/'+s.accountId+'/emailBox');
+    s.emailBoxListener.on('child_added', snap=>this.addEmailBoxMessage(snap.key,snap.val(),'Developer'));
+    // Pesan admin lama/terhubung ke Firebase Auth UID
+    if(s.userId) {
+      if(s.adminEmailListener) s.adminEmailListener.off();
+      s.adminEmailListener=mabarDB.ref('adminMessages/'+s.userId);
+      s.adminEmailListener.on('child_added', snap=>this.addEmailBoxMessage(snap.key,snap.val(),'Developer'));
+    }
+  },
+  addEmailBoxMessage(key,msg,defaultFrom) {
+    const s=this.state; if(!msg||!key) return;
+    const unique=msg.messageId||((msg.ts||'')+'_'+key);
+    if(s._seenEmailKeys[unique]) return; s._seenEmailKeys[unique]=true;
+    s.emailMessages=s.emailMessages||[];
+    s.emailMessages.push({id:key,from:msg.fromName||msg.from||defaultFrom||'Developer',text:msg.text||msg.message||'',ts:msg.ts||Date.now()});
+    s.emailMessages.sort((a,b)=>a.ts-b.ts);
+    if(s.emailBoxOpen) this.renderEmailBox();
+    this.showToast('✉️ Ada pesan baru dari Developer. Buka MENU EMAIL BOX.');
+  },
+  openEmailBox() {
+    this.state.emailBoxOpen=true;
+    const panel=document.getElementById('emailBoxPanel'); if(panel) panel.classList.add('active');
+    this.listenForDeveloperGiftsAndEmails(); this.renderEmailBox();
+  },
+  closeEmailBox() { this.state.emailBoxOpen=false; const panel=document.getElementById('emailBoxPanel'); if(panel) panel.classList.remove('active'); },
+  renderEmailBox() {
+    const s=this.state, list=document.getElementById('emailBoxList'); if(!list) return;
+    const msgs=s.emailMessages||[];
+    list.innerHTML=msgs.length?msgs.slice().reverse().map(m=>`<div class="email-item"><div class="email-meta">📩 ${this.escapeHtml(m.from)} • ${new Date(m.ts).toLocaleString('id-ID')}</div><div class="email-body">${this.escapeHtml(m.text)}</div></div>`).join(''):'<div class="nEmpty">Belum ada pesan dari Developer.</div>';
+    const compose=document.getElementById('emailVipCompose'); if(compose) compose.style.display=s.isVip?'block':'none';
+  },
+  async sendEmailToDeveloper() {
+    const s=this.state; if(!s.isVip){this.showToast('Hanya pemain VIP yang dapat mengirim pesan ke Developer.');return;}
+    const input=document.getElementById('emailVipMessage'), message=(input?.value||'').trim();
+    if(!message){this.showToast('Tulis pesan terlebih dahulu.');return;}
+    try { initFirebaseMabar(); if(!mabarDB) throw new Error('Database belum siap');
+      await mabarDB.ref('developerChats/'+(s.userId||s.accountId||'vip')).push({from:s.userEmail||s.nickname,fromUid:s.userId||'',accountId:s.accountId||'',text:message,ts:Date.now(),isVip:true,source:'emailBox'});
+      input.value=''; this.showToast('Pesan berhasil dikirim ke Developer.');
+    } catch(e) { this.showToast('Gagal mengirim pesan. Periksa koneksi dan Firebase Rules.'); }
+  },
+  async claimDeveloperGift(giftKey) {
+    const s=this.state; if(!s.accountId||!giftKey){this.showToast('Akun game belum terhubung.');return;}
+    initFirebaseMabar(); if(!mabarDB){this.showToast('Database belum siap.');return;}
+    try {
+      const accountRef=mabarDB.ref('accounts/'+s.accountId);
+      const result=await accountRef.transaction(account=>{
+        if(!account) return;
+        account.adminGifts=account.adminGifts||{};
+        const gift=account.adminGifts[giftKey];
+        if(!gift||gift.claimed===true) return;
+        const amount=Math.max(0,Math.floor(Number(gift.amount)||0)); if(!amount) return;
+        gift.claimed=true; gift.claimedAt=Date.now();
+        account.money=(Number(account.money)||0)+amount;
+        return account;
+      });
+      if(!result.committed){this.showToast('Hadiah ini sudah diklaim atau tidak tersedia.');this.markGiftClaimedUI(giftKey);return;}
+      const gift=result.snapshot.val()?.adminGifts?.[giftKey];
+      const amount=Number(gift?.amount)||0;
+      s.money+=amount; this.updateHUD(); this.saveLocal();
+      this.markGiftClaimedUI(giftKey);
+      this.showToast('✅ Berhasil claim Rp'+amount.toLocaleString('id-ID')+'!');
+    } catch(e) { this.showToast('Gagal claim hadiah. Periksa Firebase Rules.'); }
+  },
+  markGiftClaimedUI(giftKey) {
+    const n=this.state.notifications.find(x=>x.data?.type==='admin_gift'&&x.data.giftKey===giftKey);
+    if(n){n.data.claimed=true;n.unread=false;n.body='Hadiah uang sudah diklaim.';}
+    this.renderNotifList();
   },
   async addFriendById(targetId) {
     targetId = (targetId || document.getElementById('addFriendIdInput').value || '').trim();
@@ -1448,7 +1651,7 @@ const Game = {
       const myId = s.anonymousUserId;
       await mabarDB.ref('rooms/'+roomCode+'/players/'+myId).set({
         nickname: s.nickname, joinedAt: Date.now(), gender: s.gender,
-        outfit: s.outfit, hat: s.hat, jualan: s.jualanItems, role:'player'
+        outfit: s.outfit, hat: s.hat, jualan: s.jualanItems, role:s.isAdmin?'admin':(s.isVip?'vip':'player'), isAdmin:!!s.isAdmin, isVip:!!s.isVip
       });
       s.currentRoomCode = roomCode;
       s.roomHostId = roomData.host;
@@ -1487,6 +1690,14 @@ const Game = {
     if (s.notifPanelOpen) { p.classList.add('active'); this.renderNotifList(); }
     else p.classList.remove('active');
   },
+  clearAllNotifications() {
+    const s = this.state;
+    s.notifications = [];
+    s._seenNotifKeys = {};
+    this.updateNotifBadge();
+    this.renderNotifList();
+    this.showToast('🗑️ Semua notifikasi dihapus');
+  },
   renderNotifList() {
     const s = this.state;
     const list = document.getElementById('notifList');
@@ -1505,6 +1716,9 @@ const Game = {
         <div class="nTitle">${this.escapeHtml(n.title)}</div>
         <div class="nBody">${this.escapeHtml(n.body)}</div>
         <div class="nTime">${timeStr}</div>`;
+      if (n.data && n.data.type === 'admin_gift') {
+        html += `<div class="nActions">${n.data.claimed?'<button class="claim" disabled style="opacity:.55">✅ SUDAH DI-CLAIM</button>':`<button class="claim" onclick="event.stopPropagation();Game.claimDeveloperGift('${this.escapeHtml(n.data.giftKey)}')">💰 CLAIM HADIAH</button>`}</div>`;
+      }
       if (n.data && n.data.type === 'room_invite') {
         html += `<div class="nActions">
           <button class="accept" onclick="event.stopPropagation();Game.acceptRoomInvite('${n.data.notifKey}','${n.data.roomCode}')">✅ TERIMA</button>
@@ -1534,6 +1748,7 @@ const Game = {
       else if (n.data.type === 'mengaji') { this.closeNotif(); this.startMengaji(n.data.surah || 'Al-Fatihah'); }
       else if (n.data.type === 'gift') { this.closeNotif(); this.openGift(n.data); }
       else if (n.data.type === 'purchase') { this.closeNotif(); this.claimPurchase(n.data); }
+      else if (n.data.type === 'admin_gift') { /* klaim melalui tombol khusus */ }
     }
     this.renderNotifList();
   },
@@ -3135,6 +3350,10 @@ const Game = {
     }).forEach(([id,x]) => {
       const isMe = (id===me);
       const isHost = (id===this.state.roomHostId);
+      const isDev = !!(x.isAdmin || x.role==='admin');
+      const isVip = !!(x.isVip || x.vip || x.role==='vip' || x.role==='teacher');
+      const nameText = this.escapeHtml(x.nickname||'Pemain');
+      const roleTag = isDev ? `<span style="color:#67e8f9;font-weight:900;margin-right:5px">🧑‍💻 DEV: ${nameText}</span>` : (isVip ? `<span style="color:#d8b4fe;font-weight:900;margin-right:5px">💫VIP: ${nameText}</span>` : nameText);
       const hostBadge = isHost ? '<span class="room-host-badge">👑 HOST</span>' : '';
       let actions = '';
       if (!isMe) {
@@ -3143,7 +3362,7 @@ const Game = {
         </div>`;
       }
       html += `<div class="room-player-item${isMe?' self':''}${isHost?' host':''}">
-        <span class="player-name">${isMe?'👤 (Kamu) ':'👥 '}${this.escapeHtml(x.nickname||'Pemain')}${hostBadge}</span>
+        <span class="player-name">${isMe?'👤 (Kamu) ':'👥 '}${roleTag}${hostBadge}</span>
         ${actions}
       </div>`;
     });
@@ -3193,30 +3412,43 @@ const Game = {
     const connectPromise = (async () => {
       initFirebaseMabar();
       if (!firebaseMabarReady || !mabarDB) throw new Error('Server online belum siap');
+      if (s.accountId) { const accountSnap=await mabarDB.ref('accounts/'+s.accountId).once('value'); if ((accountSnap.val()||{}).banned===true) throw new Error('Akun ini diblokir dari Server Public. Hubungi Developer jika ini keliru.'); }
       const roomRef = mabarDB.ref('rooms/' + publicCode);
       const snap = await roomRef.once('value');
       const data = snap.val() || {};
       const allPlayers = data.players || {};
+      // Buang pemain lama/putus koneksi agar avatar yang tertinggal tidak tampak seperti NPC.
+      const staleIds = Object.entries(allPlayers)
+        .filter(([pid, player]) => pid !== myId && player && now - (Number(player.lastActive || player.joinedAt) || 0) > 18000)
+        .map(([pid]) => pid);
+      if (staleIds.length) {
+        const cleanup = {};
+        staleIds.forEach(pid => { cleanup['players/' + pid] = null; });
+        await roomRef.update(cleanup);
+      }
       const activePlayers = Object.entries(allPlayers).filter(([pid, player]) =>
-        pid === myId || !player.lastActive || now - player.lastActive <= 120000
+        !staleIds.includes(pid) && player && (pid === myId || now - (Number(player.lastActive || player.joinedAt) || 0) <= 18000)
       );
       if (!activePlayers.some(([pid]) => pid === myId) && activePlayers.length >= 20) {
-        throw new Error('Server public penuh (20/20). Coba lagi nanti.');
+        throw new Error('SERVER PUBLIC PENUH (maksimal 20 pemain). Coba lagi nanti.');
       }
+      const playerRef = roomRef.child('players/' + myId);
+      // Daftarkan penghapusan server-side SEBELUM menulis pemain agar koneksi putus
+      // mendadak (tutup tab/aplikasi/jaringan) tidak meninggalkan avatar yatim.
+      try { await playerRef.onDisconnect().remove(); } catch (disconnectError) { console.warn('onDisconnect setup:', disconnectError); }
       const playerData = {
-        nickname:s.nickname || 'Player', joinedAt:now, lastActive:now,
+        nickname:s.nickname || 'Player', joinedAt:now, lastActive:now, accountId:s.accountId || null, userId:s.userId || null, email:s.userEmail || null,
         gender:s.gender, outfit:s.outfit, hat:s.hat, jualan:s.jualanItems || [],
-        position:{x:-40,y:0,z:14}, rotation:Math.PI, role:'public-player'
+        position:{x:-40,y:0,z:14}, rotation:Math.PI, role:s.isAdmin ? 'admin' : (s.isVip?'vip':'public-player'), isAdmin:!!s.isAdmin, isVip:!!s.isVip, sessionId:myId
       };
-      // Satu write gabungan mengurangi round-trip jaringan saat masuk server.
+      // Server public dibatasi 20 pemain agar sinkronisasi tetap ringan di HP.
       const updates = {
-        name:'SERVER PUBLIC GLOBAL', status:'playing', maxPlayers:20, public:true, updatedAt:now
+        name:'SERVER PUBLIC GLOBAL', status:'playing', maxPlayers:20, unlimitedPlayers:false, public:true, updatedAt:now
       };
       await Promise.all([
         roomRef.update(updates),
-        roomRef.child('players/' + myId).set(playerData)
+        playerRef.set(playerData)
       ]);
-      roomRef.child('players/' + myId).onDisconnect().remove().catch(()=>{});
       return { publicCode, data, activePlayers };
     })();
 
@@ -3226,6 +3458,7 @@ const Game = {
       s.roomHostId = joined.data.host || 'PUBLIC_GLOBAL';
       s.isHost = false;
       s.publicServerMode = true;
+      const adminHud = document.getElementById('adminHudBtn'); if (adminHud) adminHud.classList.toggle('visible', !!s.isAdmin);
       s.roomPlayers = Object.fromEntries(joined.activePlayers);
       this.showToast('🌐 Terhubung ke SERVER PUBLIC GLOBAL!');
       this.enterMabarGame();
@@ -3254,6 +3487,16 @@ const Game = {
     const playersRef = mabarDB.ref('rooms/'+code+'/players');
     this.state._playersSubscriber = playersRef.on('value', (snap) => {
       const players = snap.val() || {};
+      if (s.publicServerMode && mabarDB) {
+        const now = Date.now();
+        const stale = Object.entries(players).filter(([pid, data]) => pid !== s.anonymousUserId && data && now - (Number(data.lastActive || data.joinedAt) || 0) > 18000).map(([pid]) => pid);
+        if (stale.length) {
+          const cleanup = {};
+          stale.forEach(pid => { cleanup[pid] = null; });
+          playersRef.update(cleanup).catch(()=>{});
+          stale.forEach(pid => { delete players[pid]; this.removeMabarPlayer(pid); });
+        }
+      }
       this.syncMabarPlayerObjects(players);
     });
   },
@@ -3261,6 +3504,7 @@ const Game = {
     const s = this.state;
     const myId = s.anonymousUserId;
     Object.keys(s.mabarPlayers).forEach(pid => {
+      // Database is the source of truth: no matching record means the remote avatar must disappear.
       if (!players[pid] || pid === myId) this.removeMabarPlayer(pid);
     });
     Object.entries(players).forEach(([pid, data]) => {
@@ -3281,13 +3525,27 @@ const Game = {
         chibi.position.set(data.position.x, 0, data.position.z);
         chibi.rotation.y = data.rotation || 0;
         const isHostP = (pid === s.roomHostId);
-        const nameTag = this.createNameTag((data.nickname || 'Pemain'), isHostP);
+        const isAdminP = data.isAdmin === true || data.role === 'admin';
+        const isVipP = data.isVip === true || data.vip === true || data.role === 'vip' || data.role === 'teacher';
+        const nameTag = this.createNameTag((data.nickname || 'Pemain'), isHostP, isAdminP, isVipP);
         nameTag.position.y = 3.7;
         chibi.add(nameTag);
         s.scene.add(chibi);
-        mp = { obj: chibi, nameTag: nameTag, nickname: data.nickname || 'Pemain', walkPhase: 0, lastX: data.position.x, lastZ: data.position.z, _jualan: data.jualan || [], _isHost: isHostP };
+        mp = { obj: chibi, nameTag: nameTag, nickname: data.nickname || 'Pemain', walkPhase: 0, lastX: data.position.x, lastZ: data.position.z, _jualan: data.jualan || [], _isHost: isHostP, _isAdmin: isAdminP, _isVip: isVipP };
         s.mabarPlayers[pid] = mp;
       } else {
+        const latestAdmin = data.isAdmin === true || data.role === 'admin';
+        const latestVip = data.isVip === true || data.vip === true || data.role === 'vip' || data.role === 'teacher';
+        const latestNickname = data.nickname || 'Pemain';
+        if (mp._isAdmin !== latestAdmin || mp._isVip !== latestVip || mp.nickname !== latestNickname) {
+          if (mp.nameTag) mp.obj.remove(mp.nameTag);
+          mp.nameTag = this.createNameTag(latestNickname, pid === s.roomHostId, latestAdmin, latestVip);
+          mp.nameTag.position.y = 3.7;
+          mp.obj.add(mp.nameTag);
+          mp._isAdmin = latestAdmin;
+          mp._isVip = latestVip;
+          mp.nickname = latestNickname;
+        }
         const tx = data.position.x, tz = data.position.z;
         mp.obj.position.x += (tx - mp.obj.position.x) * 0.3;
         mp.obj.position.z += (tz - mp.obj.position.z) * 0.3;
@@ -3300,17 +3558,23 @@ const Game = {
         }
         if (data.micOn !== mp._micOn) {
           mp._micOn = data.micOn;
-          if (mp.nameTag) mp.nameTag.material.color = data.micOn ? new THREE.Color(0x00ff00) : new THREE.Color(0xffffff);
+          if (mp.nameTag && !mp._isAdmin) mp.nameTag.material.color = data.micOn ? new THREE.Color(0x00ff00) : new THREE.Color(0xffffff);
         }
       }
     });
   },
-  createNameTag(nickname, isHost) {
+  createNameTag(nickname, isHost, isAdmin, isVip=false) {
     const canvas = document.createElement('canvas');
     canvas.width = 512; canvas.height = 128;
     const ctx = canvas.getContext('2d');
     const grad = ctx.createLinearGradient(0,0,0,128);
-    if (isHost) {
+    if (isAdmin) {
+      grad.addColorStop(0, 'rgba(45,35,0,0.96)');
+      grad.addColorStop(1, 'rgba(18,18,0,0.96)');
+    } else if (isVip) {
+      grad.addColorStop(0, 'rgba(75,35,120,0.96)');
+      grad.addColorStop(1, 'rgba(35,15,65,0.96)');
+    } else if (isHost) {
       grad.addColorStop(0, 'rgba(120,20,20,0.9)');
       grad.addColorStop(1, 'rgba(60,10,10,0.9)');
     } else {
@@ -3318,14 +3582,37 @@ const Game = {
       grad.addColorStop(1, 'rgba(0,50,30,0.85)');
     }
     ctx.fillStyle = grad; ctx.fillRect(0,0,512,128);
-    ctx.strokeStyle = isHost ? '#fbbf24' : '#ffd700'; ctx.lineWidth = 6; ctx.strokeRect(3,3,506,122);
-    ctx.fillStyle = isHost ? '#fbbf24' : '#ffd700'; ctx.font = 'bold 44px Arial';
+    ctx.strokeStyle = isAdmin ? '#ffd700' : (isVip ? '#c4b5fd' : (isHost ? '#fbbf24' : '#ffd700'));
+    ctx.lineWidth = 6; ctx.strokeRect(3,3,506,122);
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText((isHost ? '👑 ' : '') + nickname, 256, 64);
+    if (isAdmin) {
+      // Tag Developer memakai format yang diminta.
+      const badge = '🧑‍💻 DEV:';
+      const playerName = String(nickname || 'Developer');
+      ctx.font = 'bold 27px Arial';
+      const badgeWidth = ctx.measureText(badge).width;
+      ctx.font = 'bold 30px Arial';
+      const nameWidth = ctx.measureText(playerName).width;
+      const total = badgeWidth + 8 + nameWidth;
+      const x = (512 - total) / 2;
+      ctx.textAlign = 'left';
+      ctx.font = 'bold 34px Arial'; ctx.fillStyle = '#ffd700';
+      ctx.fillText(badge, x, 64);
+      ctx.font = 'bold 32px Arial'; ctx.fillStyle = '#ffffff';
+      ctx.fillText(playerName, x + badgeWidth + 8, 64);
+    } else if (isVip) {
+      ctx.fillStyle = '#e9d5ff';
+      ctx.font = 'bold 42px Arial';
+      ctx.fillText('💫VIP: ' + nickname, 256, 64);
+    } else {
+      ctx.fillStyle = isHost ? '#fbbf24' : '#ffd700';
+      ctx.font = 'bold 44px Arial';
+      ctx.fillText((isHost ? '👑 ' : '') + nickname, 256, 64);
+    }
     const tex = new THREE.CanvasTexture(canvas);
     const mat = new THREE.SpriteMaterial({map: tex, transparent:true, depthTest:false, color:0xffffff});
     const sprite = new THREE.Sprite(mat);
-    sprite.scale.set(2.8, 0.7, 1);
+    sprite.scale.set(isAdmin ? 3.5 : (isVip ? 3.3 : 2.8), 0.7, 1);
     return sprite;
   },
   removeMabarPlayer(pid) {
@@ -3338,6 +3625,7 @@ const Game = {
     if (s.mabarPositionInterval) clearInterval(s.mabarPositionInterval);
     s.mabarPositionInterval = setInterval(() => {
       if (!s.mabarActive || !s.currentRoomCode || !s.playerObj) return;
+      if (s.paused && s.publicServerMode) return;
       const pos = s.playerObj.position;
       const dx = Math.abs(pos.x - s.mabarLastSendPos.x);
       const dz = Math.abs(pos.z - s.mabarLastSendPos.z);
@@ -3347,6 +3635,7 @@ const Game = {
           position: {x: pos.x, z: pos.z},
           rotation: s.playerObj.rotation.y,
           nickname: s.nickname, gender: s.gender, outfit: s.outfit, hat: s.hat,
+          isAdmin: !!s.isAdmin, isVip: !!s.isVip, isTeacher: !!s.vipTeacher, accountId:s.accountId||null, userId:s.userId||null, email:s.userEmail||null, role: s.isAdmin ? 'admin' : (s.vipTeacher ? 'teacher' : (s.isVip ? 'vip' : 'public-player')),
           micOn: s.micActive, jualan: s.jualanItems, lastActive: Date.now()
         }).catch(()=>{});
       }
@@ -3355,13 +3644,33 @@ const Game = {
       position: {x: s.playerObj.position.x, z: s.playerObj.position.z},
       rotation: s.playerObj.rotation.y,
       nickname: s.nickname, gender: s.gender, outfit: s.outfit, hat: s.hat,
+      isAdmin: !!s.isAdmin, isVip: !!s.isVip, isTeacher: !!s.vipTeacher, accountId:s.accountId||null, userId:s.userId||null, email:s.userEmail||null, role: s.isAdmin ? 'admin' : (s.vipTeacher ? 'teacher' : (s.isVip ? 'vip' : 'public-player')),
       micOn: s.micActive, jualan: s.jualanItems, lastActive: Date.now()
     }).catch(()=>{});
+    if (s.mabarHeartbeatInterval) clearInterval(s.mabarHeartbeatInterval);
+    s.mabarHeartbeatInterval = setInterval(() => {
+      if (!s.mabarActive || !s.currentRoomCode || !mabarDB) return;
+      // Saat dijeda, hapus avatar online supaya tidak tertinggal di dunia pemain lain.
+      const ref = mabarDB.ref('rooms/'+s.currentRoomCode+'/players/'+s.anonymousUserId);
+      if (s.paused && s.publicServerMode) {
+        ref.remove().catch(()=>{});
+        return;
+      }
+      if (!s.playerObj) return;
+      const pos = s.playerObj.position;
+      ref.update({position:{x:pos.x,z:pos.z},rotation:s.playerObj.rotation.y,
+        nickname:s.nickname,gender:s.gender,outfit:s.outfit,hat:s.hat,isAdmin:!!s.isAdmin,isVip:!!s.isVip,isTeacher:!!s.vipTeacher,accountId:s.accountId||null,userId:s.userId||null,email:s.userEmail||null,role:s.isAdmin?'admin':(s.vipTeacher?'teacher':(s.isVip?'vip':'public-player')),
+        micOn:s.micActive,jualan:s.jualanItems,lastActive:Date.now()}).catch(()=>{});
+    }, 4000);
   },
   stopMabarSync() {
     if (this.state.mabarPositionInterval) {
       clearInterval(this.state.mabarPositionInterval);
       this.state.mabarPositionInterval = null;
+    }
+    if (this.state.mabarHeartbeatInterval) {
+      clearInterval(this.state.mabarHeartbeatInterval);
+      this.state.mabarHeartbeatInterval = null;
     }
   },
   async leaveRoom() {
@@ -3532,6 +3841,263 @@ const Game = {
     }
   },
 
+  openAdminLogin() {
+    initFirebaseAuth();
+    document.getElementById('adminPanel').classList.add('active');
+    document.getElementById('adminErr').textContent = '';
+    const form = document.getElementById('adminLoginForm');
+    const dash = document.getElementById('adminDashboard');
+    if (this._adminUser && this._adminUser.email && this._adminUser.email.toLowerCase() === 'sendy@gmail.com') {
+      form.style.display = 'none'; dash.style.display = 'block';
+      document.getElementById('adminWelcome').textContent = '✅ Admin masuk: ' + this._adminUser.email;
+      this.adminRefreshAccounts();
+    } else { form.style.display = 'block'; dash.style.display = 'none'; }
+  },
+  closeAdminPanel() { document.getElementById('adminPanel').classList.remove('active'); },
+  async submitAdminLogin() {
+    const err = document.getElementById('adminErr');
+    const btn = document.getElementById('adminLoginSubmit');
+    err.textContent = '';
+    if (!firebaseAuthReady || !authInstance) { initFirebaseAuth(); }
+    if (!authInstance) { err.textContent = 'Firebase Auth belum tersedia.'; return; }
+    const email = (document.getElementById('adminEmail').value || '').trim().toLowerCase();
+    const password = document.getElementById('adminPassword').value || '';
+    if (!email || !password) { err.textContent = 'Email dan password wajib diisi.'; return; }
+    btn.disabled = true; btn.textContent = 'MEMVERIFIKASI...';
+    try {
+      const credential = await authInstance.signInWithEmailAndPassword(email, password);
+      if (!credential.user || (credential.user.email || '').toLowerCase() !== 'sendy@gmail.com') {
+        await authInstance.signOut();
+        throw new Error('Akun ini bukan akun admin yang diizinkan.');
+      }
+      this._adminUser = credential.user;
+      document.getElementById('adminLoginForm').style.display = 'none';
+      document.getElementById('adminDashboard').style.display = 'block';
+      document.getElementById('adminWelcome').textContent = '✅ Admin masuk: ' + credential.user.email;
+      document.getElementById('adminPassword').value = '';
+      this.adminRefreshAccounts();
+    } catch(e) {
+      let msg = e.message || 'Login gagal';
+      if (msg.includes('wrong-password') || msg.includes('invalid-credential')) msg = 'Email atau password salah.';
+      else if (msg.includes('user-not-found')) msg = 'Akun admin belum terdaftar di Firebase Auth.';
+      err.textContent = '❌ ' + msg;
+    } finally { btn.disabled = false; btn.textContent = 'MASUK SEBAGAI ADMIN'; }
+  },
+  async adminEnterPublicGame() {
+    if (!this._adminUser || (this._adminUser.email || '').toLowerCase() !== 'sendy@gmail.com') {
+      this.showToast('❌ Login admin diperlukan.');
+      return;
+    }
+    // Sesi admin diarahkan hanya melalui tombol ini ke Server Public.
+    this.state.isAdmin = true;
+    this.state.userId = this._adminUser.uid || this.state.userId;
+    this.state.userEmail = this._adminUser.email || this.state.userEmail;
+    this.state.isLoggedIn = true;
+    this.state.nickname = 'Sendy.M';
+    this.state.gender = this.state.gender || 'male';
+    this.closeAdminPanel();
+    if (this.state.mabarActive && this.state.publicServerMode && mabarDB) {
+      await mabarDB.ref('rooms/' + this.state.currentRoomCode + '/players/' + this.state.anonymousUserId).update({
+        nickname: 'Sendy.M', isAdmin: true, role: 'admin', lastActive: Date.now()
+      });
+      this.showToast('🛡️ Tag ADMIN aktif di Server Public.');
+      return;
+    }
+    await this.joinPublicServer();
+  },
+  openAdminTools() {
+    if (!this.state.isAdmin || !this.state.publicServerMode || !this.state.mabarActive) { this.showToast('Menu Developer hanya tersedia untuk Admin di Server Public.'); return; }
+    this.openAdminLogin();
+  },
+  async adminRefreshAccounts() {
+    const box = document.getElementById('adminAccountsList');
+    if (!box) return;
+    if (!this._adminUser || (this._adminUser.email || '').toLowerCase() !== 'sendy@gmail.com') {
+      box.textContent = 'Silakan login sebagai admin.'; return;
+    }
+    initFirebaseMabar();
+    if (!mabarDB) { box.textContent = 'Database game belum siap. Periksa konfigurasi Firebase.'; return; }
+    box.innerHTML = '<div class="admin-note">Memuat daftar akun dari database game...</div>';
+    mabarDB.ref('accounts').once('value').then(async (snap) => {
+      const users=[];
+      snap.forEach(ch => {
+        const a=ch.val()||{};
+        users.push({
+          uid:a.userId||'', email:a.email||'', name:a.nickname||a.displayName||(a.email||'').split('@')[0]||('Akun Game '+ch.key),
+          accountId:a.accountId||ch.key, vip:a.vip===true||a.isVip===true||a.role==='vip',
+          banned:a.banned===true, lastSeen:a.lastSeen||0
+        });
+      });
+      // Tandai dan prioritaskan teman Developer agar cepat ditemukan.
+      let developerFriends = {};
+      const devAccountId = this.state.accountId;
+      if (devAccountId) {
+        try {
+          const fs = await mabarDB.ref('accounts/'+devAccountId+'/friends').once('value');
+          developerFriends = fs.val() || {};
+        } catch (_) {}
+      }
+      users.forEach(u => { u.isDeveloperFriend = !!(developerFriends[u.accountId] || (u.uid && developerFriends[u.uid])); });
+      users.sort((a,b) => Number(b.isDeveloperFriend)-Number(a.isDeveloperFriend) || a.name.localeCompare(b.name,'id'));
+      this._adminAccountRows=users;
+      if (!users.length) {
+        box.innerHTML='<div class="admin-note">Belum ada akun game yang terdaftar pada mabarDB/accounts. Minta pemain login ke game dan pastikan proses pendaftaran akun berjalan.</div>';
+        return;
+      }
+      box.innerHTML='<div class="admin-note">'+users.length+' akun game ditemukan. Email hanya muncul jika tersimpan pada data akun Firebase.</div>'+users.map((u,i)=>{
+        const name=this.escapeHtml(u.name), email=this.escapeHtml(u.email||'Email belum tersimpan'), uid=this.escapeHtml(u.uid||'UID belum tertaut'), aid=this.escapeHtml(u.accountId||'Belum tertaut');
+        return `<div class="admin-list-item${u.isDeveloperFriend?' dev-friend':''}"><div style="width:100%"><div class="admin-account-head"><span><b>${name}</b>${u.isDeveloperFriend?'<br><span class="admin-friend-label">👥 TEMAN DEVELOPER</span>':''}<br><span style="color:#9fd6ff">${email}</span><br><span style="color:#aaa">UID: ${uid}<br>ID Game: ${aid}</span></span><span style="color:${u.banned?'#f87171':u.vip?'#c4b5fd':'#86efac'};white-space:nowrap">${u.banned?'DIBAN':u.vip?'VIP':'AKTIF'}</span></div><div class="admin-account-actions"><button onclick="Game.adminChatPlayerByIndex(${i})">💬 CHAT PLAYER</button><button class="money" onclick="Game.adminGiveMoneyByIndex(${i})">💰 KIRIM UANG</button><button class="vip" onclick="Game.adminToggleVipByIndex(${i})">⭐ ${u.vip?'CABUT VIP':'JADIKAN VIP'}</button><button class="ban" onclick="Game.adminToggleBanByIndex(${i})">${u.banned?'♻️ BUKA BAN':'⛔ BAN PLAYER'}</button></div></div></div>`;
+      }).join('');
+    }).catch((e) => {
+      console.error('Gagal memuat daftar akun admin:', e);
+      box.innerHTML='<div class="admin-note">Gagal membaca mabarDB/accounts. Periksa Firebase Realtime Database Rules agar hanya admin yang terautentikasi dapat membaca daftar akun, lalu coba MUAT ULANG DAFTAR AKUN.</div>';
+    });
+  },
+  async adminChatPlayerByIndex(i) {
+    const u=(this._adminAccountRows||[])[i]; if(!u) return;
+    const message=prompt('Kirim pesan ke '+(u.name||u.email||'player')+':'); if(!message||!message.trim()) return;
+    try {
+      initFirebaseMabar(); if(!mabarDB) throw new Error('Database game tidak tersedia');
+      const adminAccountId=this.state.accountId||'admin';
+      const messageId=String(Date.now())+'_'+String(u.accountId||u.uid||'player');
+      const payload={from:adminAccountId,fromName:'🧑‍💻 DEV: Sendy.M',to:u.accountId||u.uid||'',toUid:u.uid||'',text:message.trim(),ts:Date.now(),messageId,isAdmin:true};
+      if(u.accountId) {
+        await mabarDB.ref('chats/'+[adminAccountId,u.accountId].sort().join('_')).push(payload);
+        await mabarDB.ref('accounts/'+u.accountId+'/emailBox').push(payload);
+      }
+      if(u.uid) await mabarDB.ref('adminMessages/'+u.uid).push(payload);
+      this.showToast('Pesan admin dikirim ke database.');
+    } catch(e) { this.showToast('Gagal mengirim chat. Periksa Firebase Rules.'); }
+  },
+  async adminGiveMoneyByIndex(i) {
+    const u=(this._adminAccountRows||[])[i]; if(!u) return;
+    if(!u.accountId) { this.showToast('Akun ini belum tertaut ke ID akun game.'); return; }
+    const raw=prompt('Nominal hadiah untuk '+u.name+' (Rp):','10000'); if(raw===null) return;
+    const amount=Math.floor(Number(raw)); if(!Number.isFinite(amount)||amount<1||amount>1000000000){this.showToast('Nominal tidak valid.');return;}
+    const reasons=['Apresiasi atas partisipasi dan dukungan','Penghargaan atas perilaku baik dan sportivitas','Hadiah kegiatan atau event sekolah','Bonus loyalitas pemain','Bantuan dan dukungan dari Developer','Lainnya'];
+    const reasonChoice=prompt('Pilih alasan hadiah:\n1. Apresiasi atas partisipasi dan dukungan\n2. Penghargaan atas perilaku baik dan sportivitas\n3. Hadiah kegiatan atau event sekolah\n4. Bonus loyalitas pemain\n5. Bantuan dan dukungan dari Developer\n6. Lainnya','1');
+    if(reasonChoice===null) return;
+    const reasonIndex=Number(reasonChoice)-1;
+    let reason=reasons[reasonIndex];
+    if(reasonIndex===5) reason=(prompt('Masukkan alasan hadiah:','Terima kasih atas partisipasi Anda.')||'').trim();
+    if(!reason || !reasons[reasonIndex]){this.showToast('Pilihan alasan tidak valid.');return;}
+    const playerName=u.name||u.nickname||'Player';
+    const formalMessage=`Dear ${playerName},\n\nKami baru saja mengirimkan hadiah uang sebesar Rp${amount.toLocaleString('id-ID')}.\nDengan alasan: ${reason}.\n\nSilakan buka Notifikasi MABAR untuk melakukan klaim hadiah. Hadiah hanya dapat diklaim satu kali.\n\nTerima kasih atas partisipasi Anda.\n\nHormat kami,\nDeveloper Schooll Muslim Simulator`;
+    try {
+      initFirebaseMabar();
+      const giftRef=mabarDB.ref('accounts/'+u.accountId+'/adminGifts').push();
+      await giftRef.set({amount,from:'Sendy.M',reason,createdAt:Date.now(),claimed:false});
+      await mabarDB.ref('accounts/'+u.accountId+'/emailBox').push({from:'🧑‍💻 DEV: Sendy.M',fromName:'🧑‍💻 DEV: Sendy.M',text:formalMessage,ts:Date.now(),isAdmin:true,type:'gift_notice'});
+      this.showToast('Hadiah dan surat pemberitahuan berhasil dikirim ke '+playerName+'.');
+    }
+    catch(e){this.showToast('Gagal mengirim hadiah/pesan. Periksa Firebase Rules.');}
+  },
+  async adminGrantVipByAccountId() {
+    const admin=this._adminUser;
+    if(!admin || (admin.email||'').toLowerCase()!=='sendy@gmail.com') { this.showToast('Login Developer diperlukan.'); return; }
+    const input=document.getElementById('adminVipAccountId');
+    const status=document.getElementById('adminVipIdStatus');
+    const accountId=(input?.value||'').trim();
+    if(!/^\d{6}$/.test(accountId)) { if(status) status.textContent='ID Akun harus terdiri dari 6 angka.'; this.showToast('ID Akun Game tidak valid.'); return; }
+    try {
+      initFirebaseMabar(); if(!mabarDB) throw new Error('Database game belum siap.');
+      const accountRef=mabarDB.ref('accounts/'+accountId);
+      const snap=await accountRef.once('value'); const account=snap.val();
+      if(!account) { if(status) status.textContent='Akun dengan ID tersebut tidak ditemukan.'; this.showToast('Akun Game tidak ditemukan.'); return; }
+      const uid=account.userId||'';
+      const now=Date.now();
+      await accountRef.update({vip:true,isVip:true,role:'vip',vipGrantedAt:now,vipGrantedBy:'Sendy.M'});
+      if(uid && authDB) await authDB.ref('users/'+uid).update({role:'vip',isVip:true,vipGrantedAt:now,vipGrantedBy:'Sendy.M'});
+      // Perbarui avatar pemain jika sedang online di server publik.
+      const roomSnap=await mabarDB.ref('rooms/PUBLIC_GLOBAL/players').once('value');
+      const roomUpdates={};
+      roomSnap.forEach(ch=>{const player=ch.val()||{}; if(player.accountId===accountId || (uid && player.userId===uid)) roomUpdates[ch.key]={...player,isVip:true,role:player.isAdmin?'admin':'vip'};});
+      if(Object.keys(roomUpdates).length) await mabarDB.ref('rooms/PUBLIC_GLOBAL/players').update(roomUpdates);
+      // Simpan notifikasi pada akun penerima agar langsung diterima oleh listener MABAR.
+      await accountRef.child('mabarNotifications').push({type:'admin_vip_granted',title:'⭐ SELAMAT! KAMU MENDAPATKAN VIP',body:'Developer telah memberikan status VIP kepada akun Anda. Tag nama VIP dan fitur VIP kini tersedia. Silakan masuk ulang jika status belum terlihat.',from:'🧑‍💻 DEV: Sendy.M',ts:now,read:false});
+      if(status) status.textContent='Berhasil! VIP diberikan kepada '+(account.nickname||account.displayName||'Player')+' ('+accountId+').';
+      if(input) input.value='';
+      this.showToast('⭐ VIP berhasil diberikan. Notifikasi MABAR telah dikirim ke '+(account.nickname||'pemain')+'.');
+      this.adminRefreshAccounts();
+    } catch(e) { console.error('adminGrantVipByAccountId',e); if(status) status.textContent='Gagal memberikan VIP. Periksa Firebase Rules.'; this.showToast('Gagal memberikan VIP. Periksa Firebase Rules.'); }
+  },
+  async adminToggleVipByIndex(i) {
+    const u=(this._adminAccountRows||[])[i]; if(!u) return;
+    if(!u.uid && !u.accountId){this.showToast('Akun belum memiliki UID atau ID game.');return;}
+    const makeVip=!u.vip;
+    try {
+      if(u.uid) await authDB.ref('users/'+u.uid).update({role:makeVip?'vip':'player',isVip:makeVip,updatedAt:Date.now()});
+      if(u.accountId) {
+        await mabarDB.ref('accounts/'+u.accountId).update({role:makeVip?'vip':'player',vip:makeVip,isVip:makeVip,updatedAt:Date.now()});
+        const roomPlayers=await mabarDB.ref('rooms/PUBLIC_GLOBAL/players').once('value');
+        const updates={}; roomPlayers.forEach(ch=>{const d=ch.val()||{};if(d.accountId===u.accountId || (u.uid&&d.userId===u.uid)) updates[ch.key]={...d,isVip:makeVip,role:makeVip?'vip':(d.isAdmin?'admin':'public-player')};});
+        if(Object.keys(updates).length) await mabarDB.ref('rooms/PUBLIC_GLOBAL/players').update(updates);
+      }
+      this.showToast(makeVip?'Status VIP diberikan.':'Status VIP dicabut.'); this.adminRefreshAccounts();
+    } catch(e){this.showToast('Gagal mengubah VIP. Periksa Firebase Rules.');}
+  },
+  async adminToggleBanByIndex(i) {
+    const u=(this._adminAccountRows||[])[i]; if(!u) return;
+    if(!u.accountId){this.showToast('Akun ini belum tertaut ke ID game.');return;}
+    const banned=!u.banned;
+    try {
+      await mabarDB.ref('accounts/'+u.accountId).update({banned,banUpdatedAt:Date.now(),banBy:'Sendy.M'});
+      if(this.state.currentRoomCode && mabarDB){
+        const ps=await mabarDB.ref('rooms/'+this.state.currentRoomCode+'/players').once('value');
+        const updates={}; ps.forEach(ch=>{const d=ch.val()||{};if(d.accountId===u.accountId || (u.uid&&d.userId===u.uid)) updates[ch.key]=banned?null:undefined;});
+        Object.keys(updates).forEach(k=>{if(updates[k]===undefined)delete updates[k];}); if(Object.keys(updates).length) await mabarDB.ref('rooms/'+this.state.currentRoomCode+'/players').update(updates);
+      }
+      this.showToast(banned?'Status ban dicatat. Pemblokiran menyeluruh perlu validasi server.':'Ban dibuka.'); this.adminRefreshAccounts();
+    } catch(e){this.showToast('Gagal mengubah ban. Periksa Firebase Rules.');}
+  },
+  openVipLogin() {
+    initFirebaseAuth(); document.getElementById('vipPanel').classList.add('active'); document.getElementById('vipErr').textContent='';
+    document.getElementById('vipLoginForm').style.display=this.state.isVip?'none':'block';
+    document.getElementById('vipDashboard').style.display=this.state.isVip?'block':'none';
+    if(this.state.isVip) document.getElementById('vipWelcome').textContent='⭐ VIP aktif: '+(this.state.userEmail||this.state.nickname);
+  },
+  closeVipPanel(){document.getElementById('vipPanel').classList.remove('active');},
+  async submitVipLogin(){
+    const err=document.getElementById('vipErr'); err.textContent=''; initFirebaseAuth();
+    const email=(document.getElementById('vipEmail').value||'').trim().toLowerCase(), password=document.getElementById('vipPassword').value||'';
+    if(!authInstance||!email||!password){err.textContent='Email dan password wajib diisi.';return;}
+    try{
+      const cred=await authInstance.signInWithEmailAndPassword(email,password); const uid=cred.user.uid;
+      let vip=false, profile={}; if(authDB){const snap=await authDB.ref('users/'+uid).once('value');profile=snap.val()||{};vip=profile.role==='vip'||profile.isVip===true;}
+      if(!vip && mabarDB){const as=await mabarDB.ref('accounts').orderByChild('userId').equalTo(uid).once('value');as.forEach(ch=>{const a=ch.val()||{};if(a.vip===true||a.role==='vip')vip=true;if(!this.state.accountId)this.state.accountId=ch.key;});}
+      if(!vip){await authInstance.signOut();throw new Error('Akun ini belum diberi status VIP oleh Developer.');}
+      this.state.userId=uid;this.state.userEmail=cred.user.email;this.state.isLoggedIn=true;this.state.isVip=true;this.state.nickname=cred.user.displayName||profile.nickname||email.split('@')[0];
+      if(mabarDB && this.state.accountId) await mabarDB.ref('accounts/'+this.state.accountId).update({userId:uid,email:cred.user.email,nickname:this.state.nickname,isVip:true,vip:true,role:'vip'}).catch(()=>{});
+      if(mabarDB && this.state.mabarActive && this.state.currentRoomCode) await mabarDB.ref('rooms/'+this.state.currentRoomCode+'/players/'+this.state.anonymousUserId).update({nickname:this.state.nickname,isVip:true,role:'vip'}).catch(()=>{});
+      this.listenForDeveloperGiftsAndEmails();
+      document.getElementById('vipLoginForm').style.display='none';document.getElementById('vipDashboard').style.display='block';document.getElementById('vipWelcome').textContent='⭐ VIP aktif: '+email;document.getElementById('vipPassword').value='';
+    }catch(e){err.textContent='❌ '+(e.message||'Login VIP gagal');}
+  },
+  async vipToggleTeacher(){
+    if(!this.state.isVip){this.showToast('Login VIP diperlukan.');return;}
+    this.state.vipTeacher=!this.state.vipTeacher;
+    if(this.state.mabarActive&&this.state.currentRoomCode&&mabarDB){await mabarDB.ref('rooms/'+this.state.currentRoomCode+'/players/'+this.state.anonymousUserId).update({role:this.state.vipTeacher?'teacher':(this.state.isAdmin?'admin':'public-player'),isVip:true,isTeacher:this.state.vipTeacher}).catch(()=>{});}
+    this.showToast(this.state.vipTeacher?'Mode guru diaktifkan untuk sesi ini.':'Mode guru dinonaktifkan.');
+  },
+  async vipPlaceClassAtPlayer(){
+    if(!this.state.isVip){this.showToast('Login VIP diperlukan.');return;}
+    if(!this.state.playerObj||!this.state.scene){this.showToast('Masuk ke game terlebih dahulu.');return;}
+    const p=this.state.playerObj.position; const group=new THREE.Group();
+    const wallMat=new THREE.MeshLambertMaterial({color:0xe7dfc8}); const roofMat=new THREE.MeshLambertMaterial({color:0x8b4513});
+    const floor=new THREE.Mesh(new THREE.BoxGeometry(6,0.2,5),new THREE.MeshLambertMaterial({color:0xc5a878}));floor.position.y=0.1;group.add(floor);
+    const back=new THREE.Mesh(new THREE.BoxGeometry(6,2.8,0.18),wallMat);back.position.set(0,1.5,-2.4);group.add(back);
+    [-2.9,2.9].forEach(x=>{const w=new THREE.Mesh(new THREE.BoxGeometry(.18,2.8,5),wallMat);w.position.set(x,1.5,0);group.add(w);});
+    const roof=new THREE.Mesh(new THREE.BoxGeometry(6.3,.25,5.3),roofMat);roof.position.y=3;group.add(roof);
+    group.position.set(p.x,0,p.z);this.state.scene.add(group);this._vipClassrooms=this._vipClassrooms||[];this._vipClassrooms.push(group);
+    if(this.state.mabarActive&&this.state.currentRoomCode&&mabarDB){mabarDB.ref('rooms/'+this.state.currentRoomCode+'/vipClassrooms').push({ownerUid:this.state.userId,ownerEmail:this.state.userEmail,x:p.x,z:p.z,createdAt:Date.now()}).catch(()=>{});}
+    this.showToast('Kelas pribadi dibuat di posisi karakter. Untuk memilih tempat lain, pindah ke lokasi itu dahulu.');
+  },
+  async vipChatDeveloper(){
+    if(!this.state.isVip){this.showToast('Login VIP diperlukan.');return;}
+    const message=prompt('Pesan untuk Developer:');if(!message||!message.trim())return;
+    try{initFirebaseMabar();await mabarDB.ref('developerChats/'+(this.state.userId||this.state.accountId||'vip')).push({from:this.state.userEmail||this.state.nickname,fromUid:this.state.userId||'',text:message.trim(),ts:Date.now()});this.showToast('Pesan terkirim ke kotak chat Developer.');}catch(e){this.showToast('Gagal mengirim pesan. Periksa Firebase Rules.');}
+  },
+
   openAuth(m) {
     initFirebaseAuth();
     document.getElementById('startMenu').classList.add('hidden');
@@ -3557,6 +4123,62 @@ const Game = {
     document.getElementById('authFields').innerHTML = h;
     document.getElementById('authErr').textContent = '';
   },
+  async loginWithGoogle() {
+    const err = document.getElementById('authErr');
+    const btn = document.getElementById('googleLoginBtn');
+    err.textContent = '';
+    initFirebaseAuth();
+    initFirebaseMabar();
+    if (!authInstance) { err.textContent = 'Firebase Authentication belum tersedia.'; return; }
+    const oldText = btn ? btn.innerHTML : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Menghubungkan ke Google...'; }
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('email');
+      provider.addScope('profile');
+      const credential = await authInstance.signInWithPopup(provider);
+      const user = credential.user;
+      const email = user.email || '';
+      const fallbackName = (email.split('@')[0] || 'Player');
+      let profile = {};
+      try {
+        const snap = await authDB.ref('users/' + user.uid).once('value');
+        profile = snap.val() || {};
+      } catch (_) {}
+      const nickname = user.displayName || profile.nickname || fallbackName;
+      if (!profile.email) {
+        await authDB.ref('users/' + user.uid).update({
+          email: email, nickname: nickname, createdAt: Date.now(), role: profile.role || 'player',
+          isVip: profile.isVip === true, photoURL: user.photoURL || null, provider: 'google'
+        });
+      } else {
+        await authDB.ref('users/' + user.uid).update({email: email, nickname: nickname, photoURL: user.photoURL || null, provider: 'google'});
+      }
+      this.state.userId = user.uid;
+      this.state.userEmail = email;
+      this.state.isLoggedIn = true;
+      this.state.nickname = nickname;
+      this.state.isVip = profile.role === 'vip' || profile.isVip === true;
+      if (mabarDB && this.state.accountId) {
+        await mabarDB.ref('accounts/' + this.state.accountId).update({
+          email: email, userId: user.uid, uid: user.uid, nickname: nickname,
+          displayName: nickname, accountId: this.state.accountId,
+          photoURL: user.photoURL || null, lastSeen: Date.now()
+        }).catch(() => {});
+      }
+      this.closeAuth();
+      this.startNew();
+    } catch (e) {
+      let message = e.message || 'Login Google gagal.';
+      if (e.code === 'auth/popup-closed-by-user') message = 'Jendela login Google ditutup sebelum selesai.';
+      else if (e.code === 'auth/popup-blocked') message = 'Popup diblokir browser. Izinkan popup lalu coba lagi.';
+      else if (e.code === 'auth/unauthorized-domain') message = 'Domain game belum diizinkan di Firebase Authentication.';
+      else if (e.code === 'auth/operation-not-allowed') message = 'Provider Google belum diaktifkan di Firebase Authentication.';
+      err.textContent = '❌ ' + message;
+    } finally {
+      if (btn) { btn.disabled = false; btn.innerHTML = oldText; }
+    }
+  },
   async submitAuth() {
     const err = document.getElementById('authErr');
     err.textContent = '';
@@ -3573,12 +4195,23 @@ const Game = {
       if (this._authMode === 'login') {
         const c = await authInstance.signInWithEmailAndPassword(em, pw);
         this.state.userId = c.user.uid; this.state.userEmail = c.user.email; this.state.isLoggedIn = true;
+        this.state.nickname = c.user.displayName || em.split('@')[0] || 'Player';
+        try {
+          const profileSnap = await authDB.ref('users/'+c.user.uid).once('value');
+          const savedProfile = profileSnap.val() || {};
+          this.state.nickname = c.user.displayName || savedProfile.nickname || this.state.nickname;
+          this.state.isVip = savedProfile.role === 'vip' || savedProfile.isVip === true;
+        } catch (_) {}
+        if (mabarDB && this.state.accountId) await mabarDB.ref('accounts/'+this.state.accountId).update({email:em,userId:c.user.uid,nickname:this.state.nickname,displayName:this.state.nickname,accountId:this.state.accountId,lastSeen:Date.now()}).catch(()=>{});
       } else {
         const c = await authInstance.createUserWithEmailAndPassword(em, pw);
         if (nm) await c.user.updateProfile({displayName:nm});
         if (nm) this.state.nickname = nm;
-        await authDB.ref('users/'+c.user.uid).set({email:em,nickname:nm||em.split('@')[0],createdAt:Date.now()});
+        await authDB.ref('users/'+c.user.uid).set({email:em,nickname:nm||em.split('@')[0],createdAt:Date.now(),role:'player',isVip:false});
+        if(mabarDB && this.state.accountId) await mabarDB.ref('accounts/'+this.state.accountId).update({email:em,userId:c.user.uid,nickname:nm||em.split('@')[0],accountId:this.state.accountId,lastSeen:Date.now()}).catch(()=>{});
         this.state.userId = c.user.uid; this.state.userEmail = em; this.state.isLoggedIn = true;
+        this.state.nickname = nm || em.split('@')[0];
+        if (mabarDB && this.state.accountId) await mabarDB.ref('accounts/'+this.state.accountId).update({nickname:this.state.nickname,displayName:this.state.nickname,email:em,userId:c.user.uid,accountId:this.state.accountId,lastSeen:Date.now()}).catch(()=>{});
       }
       this.closeAuth();
       this.startNew();
@@ -3599,6 +4232,22 @@ const Game = {
     if (this.state.currentRoomCode) this.leaveRoom();
     if (authInstance) authInstance.signOut();
     location.reload();
+  },
+  async editNickname() {
+    const current = this.state.nickname || 'Player';
+    const entered = prompt('Masukkan nama panggilan yang ingin ditampilkan kepada pemain lain:', current);
+    if (entered === null) return;
+    const nick = entered.trim().replace(/[<>]/g,'').slice(0,20);
+    if (!nick) { this.showToast('Nama panggilan tidak boleh kosong.'); return; }
+    this.state.nickname = nick;
+    try {
+      if (mabarDB && this.state.accountId) await mabarDB.ref('accounts/'+this.state.accountId).update({nickname:nick,displayName:nick,lastSeen:Date.now()});
+      if (mabarDB && this.state.mabarActive && this.state.currentRoomCode && this.state.anonymousUserId) {
+        await mabarDB.ref('rooms/'+this.state.currentRoomCode+'/players/'+this.state.anonymousUserId).update({nickname:nick,lastActive:Date.now()});
+      }
+      if (authInstance && authInstance.currentUser) await authInstance.currentUser.updateProfile({displayName:nick}).catch(()=>{});
+      this.showToast('Nama panggilan berhasil diperbarui: '+nick);
+    } catch(e) { this.showToast('Nama di game diperbarui, tetapi sinkronisasi akun gagal.'); }
   },
   playOffline() {
     this.state.isLoggedIn = false;
@@ -4319,8 +4968,24 @@ const Game = {
       const ox = Math.sin(s.camYaw)*Math.cos(pt)*d;
       const oz = Math.cos(s.camYaw)*Math.cos(pt)*d;
       const oy = Math.sin(pt)*d;
-      s.camera.position.lerp(new THREE.Vector3(p.x+ox, p.y+2.4+oy, p.z+oz), 0.15);
-      s.camera.lookAt(p.x, p.y+2.2, p.z);
+      const target = new THREE.Vector3(p.x, p.y+2.2, p.z);
+      const desired = new THREE.Vector3(p.x+ox, p.y+2.4+oy, p.z+oz);
+      // Tanah adalah bidang kokoh pada y=0. Jaga kamera third-person agar tidak
+      // pernah turun menembus permukaan tanah, termasuk saat pitch diarahkan ke bawah.
+      const groundClearance = 0.75;
+      if (desired.y < groundClearance) {
+        const dy = desired.y - target.y;
+        const t = Math.abs(dy) > 0.0001 ? (groundClearance - target.y) / dy : 0;
+        if (t >= 0 && t <= 1) {
+          desired.x = target.x + (desired.x-target.x)*t;
+          desired.z = target.z + (desired.z-target.z)*t;
+        }
+        desired.y = groundClearance;
+      }
+      s.camera.position.lerp(desired, 0.22);
+      // Lerping juga dibatasi agar posisi sebelumnya tidak tertinggal di bawah tanah.
+      if (s.camera.position.y < groundClearance) s.camera.position.y = groundClearance;
+      s.camera.lookAt(target);
     }
   },
 
@@ -4432,10 +5097,29 @@ const Game = {
 
   openOutfit() {
     const s = this.state;
-    document.getElementById('outfitModal').classList.add('active');
-    if (!s.previewRenderer) requestAnimationFrame(() => this.initOutfitPreview());
-    else { s.previewActive = true; this.updatePreview(); }
-    this.renderOutfitItems();
+    const modal = document.getElementById('outfitModal');
+    if (!modal) return;
+    // Tampilkan panel lebih dulu; pekerjaan preview 3D dilakukan setelah frame UI agar tombol terasa responsif.
+    modal.classList.add('active');
+    s.previewActive = false;
+    if (!s._outfitItemsRendered) {
+      this.renderOutfitItems();
+      s._outfitItemsRendered = true;
+    }
+    if (s._outfitOpenFrame) {
+      if (typeof cancelIdleCallback === 'function') cancelIdleCallback(s._outfitOpenFrame);
+      else clearTimeout(s._outfitOpenFrame);
+    }
+    const preparePreview = () => {
+      s._outfitOpenFrame = null;
+      if (!modal.classList.contains('active')) return;
+      if (!s.previewRenderer) this.initOutfitPreview();
+      else { s.previewActive = true; this.updatePreview(); }
+    };
+    // The modal becomes visible immediately; WebGL work runs after the first paint / idle slot.
+    s._outfitOpenFrame = typeof requestAnimationFrame === 'function'
+      ? requestAnimationFrame(() => setTimeout(preparePreview, 0))
+      : setTimeout(preparePreview, 30);
   },
   initOutfitPreview() {
     const s = this.state;
@@ -4517,6 +5201,7 @@ const Game = {
     else if (t === 'outfit') s.outfit = v;
     this.updatePreview();
     this.renderOutfitItems();
+    this.state._outfitItemsRendered = true;
   },
   saveOutfit() {
     this.applyAppearance();
@@ -4569,7 +5254,8 @@ const Game = {
   saveProfile() {
     const s = this.state;
     s.nickname = document.getElementById('profileNick').value.trim() || 'Murid';
-    document.getElementById('hudNick').textContent = '👤 ' + s.nickname;
+    const ownTag = document.getElementById('hudNick');
+    if (ownTag) { ownTag.textContent = '👤 ' + s.nickname; ownTag.style.display = s.showOwnNameTag === false ? 'none' : ''; }
     if (firebaseMabarReady && s.accountId) {
       mabarDB.ref('accounts/'+s.accountId).update({ nickname: s.nickname }).catch(()=>{});
     }
@@ -4592,6 +5278,23 @@ const Game = {
     ].forEach(t => {
       h += `<div class="taskItem${s.tasks[t.id]?' done':''}"><div class="tname">${t.n}</div><div class="tstat">${s.tasks[t.id]?'✅ Selesai':'⏳ Belum'}</div></div>`;
     });
+    const extraMissions = [
+      {id:'extra_salam',n:'🤝 Menyapa 3 warga sekolah',reward:200},
+      {id:'extra_kebersihan',n:'🧹 Menjaga kebersihan lingkungan',reward:200},
+      {id:'extra_perpustakaan',n:'📚 Mengunjungi perpustakaan',reward:250},
+      {id:'extra_tolong',n:'💚 Membantu teman yang membutuhkan',reward:250},
+      {id:'extra_adab',n:'🌟 Mempraktikkan adab yang baik',reward:200},
+      {id:'extra_kantin',n:'🥗 Mengunjungi kantin sekolah',reward:150},
+      {id:'extra_lapangan',n:'⚽ Beraktivitas di lapangan',reward:150},
+      {id:'extra_belajar',n:'📝 Mengulang pelajaran sekolah',reward:250},
+      {id:'extra_masjid',n:'🕌 Mengunjungi masjid sekolah',reward:200},
+      {id:'extra_persahabatan',n:'👥 Menjalin pertemanan dengan pemain lain',reward:300}
+    ];
+    h += '<h3 style="color:#7cf0b0;margin:14px 0 10px">✨ 10 MISI TAMBAHAN:</h3>';
+    extraMissions.forEach(t => {
+      const done=!!s.tasks[t.id];
+      h += `<div class="taskItem${done?' done':''}"><div class="tname">${t.n}<div style="font-size:10px;color:#fbbf24">Hadiah: Rp${t.reward.toLocaleString('id-ID')}</div></div><div class="tstat">${done?'✅ Selesai':`<button class="mbtn gold" style="padding:6px 9px;font-size:10px" onclick="Game.completeExtraMission('${t.id}',${t.reward})">SELESAIKAN</button>`}</div></div>`;
+    });
     h += '<h3 style="color:#7cf0b0;margin:14px 0 10px">📊 Progres:</h3>';
     h += `<div class="taskItem"><div class="tname">📖 Tilawah: ${s.progress.tilawah}</div></div>`;
     h += `<div class="taskItem"><div class="tname">🎙️ Hafalan: ${s.progress.hafalan}</div></div>`;
@@ -4602,12 +5305,22 @@ const Game = {
     list.innerHTML = h;
     document.getElementById('tasksModal').classList.add('active');
   },
+  completeExtraMission(id,reward) {
+    const s=this.state;
+    if(!id || s.tasks[id]) { this.showToast('Misi ini sudah diselesaikan.'); return; }
+    s.tasks[id]=true;
+    const amount=Math.max(0,Math.floor(Number(reward)||0));
+    s.money=(Number(s.money)||0)+amount;
+    this.updateHUD(); this.saveLocal(); this.openTasks();
+    this.showToast('✅ Misi selesai! Hadiah Rp'+amount.toLocaleString('id-ID')+' diterima.');
+  },
   closeTasks() { document.getElementById('tasksModal').classList.remove('active'); },
 
   openSettings() {
     document.getElementById('camMode').value = this.state.camMode;
     document.getElementById('camSens').value = this.state.camSens;
     document.getElementById('timeCycleSel').value = this.state.timeCycle || 'realtime';
+    document.getElementById('ownNameTagSel').value = this.state.showOwnNameTag === false ? 'hide' : 'show';
     document.getElementById('settingsModal').classList.add('active');
     document.getElementById('camSens').oninput = e => {
       this.state.camSens = parseFloat(e.target.value);
@@ -4620,6 +5333,8 @@ const Game = {
     s.camSens = parseFloat(document.getElementById('camSens').value);
     s.quality = document.getElementById('qualitySel').value;
     s.timeCycle = document.getElementById('timeCycleSel').value;
+    s.showOwnNameTag = document.getElementById('ownNameTagSel').value !== 'hide';
+    this.updateHUD();
     this.closeSettings();
     this.showToast('⚙️ Tersimpan');
     this.saveLocal();
@@ -4662,13 +5377,32 @@ const Game = {
   },
   updateHUD() {
     const s = this.state;
-    document.getElementById('hudNick').textContent = '👤 ' + s.nickname;
+    const ownTag = document.getElementById('hudNick');
+    if (ownTag) { ownTag.textContent = '👤 ' + s.nickname; ownTag.style.display = s.showOwnNameTag === false ? 'none' : ''; }
     document.getElementById('hudKelas').textContent = '📚 Kelas ' + s.kelas + ' ▾';
     document.getElementById('hudMoney').textContent = '💰 Rp' + s.money.toLocaleString('id-ID');
+    const adminBtn = document.getElementById('adminHudBtn');
+    if (adminBtn) adminBtn.classList.toggle('visible', !!(s.isAdmin && s.publicServerMode && s.mabarActive));
   },
   togglePause() {
-    this.state.paused = !this.state.paused;
-    if (this.state.paused) this.showToast('⏸️ Dijeda');
+    const s = this.state;
+    s.paused = !s.paused;
+    if (s.paused) {
+      this.showToast(s.publicServerMode ? '⏸️ Dijeda — avatar server dibersihkan' : '⏸️ Dijeda');
+      if (s.publicServerMode && s.currentRoomCode && mabarDB) {
+        mabarDB.ref('rooms/'+s.currentRoomCode+'/players/'+s.anonymousUserId).remove().catch(()=>{});
+      }
+    } else {
+      this.showToast('▶️ Dilanjutkan');
+      if (s.publicServerMode && s.currentRoomCode && s.playerObj && mabarDB) {
+        const p=s.playerObj.position;
+        mabarDB.ref('rooms/'+s.currentRoomCode+'/players/'+s.anonymousUserId).set({
+          nickname:s.nickname||'Player',joinedAt:Date.now(),lastActive:Date.now(),accountId:s.accountId||null,userId:s.userId||null,email:s.userEmail||null,gender:s.gender,outfit:s.outfit,hat:s.hat,
+          jualan:s.jualanItems||[],position:{x:p.x,z:p.z},rotation:s.playerObj.rotation.y,role:s.isAdmin?'admin':(s.vipTeacher?'teacher':(s.isVip?'vip':'public-player')),isAdmin:!!s.isAdmin,isVip:!!s.isVip,isTeacher:!!s.vipTeacher
+        }).catch(()=>{});
+        mabarDB.ref('rooms/'+s.currentRoomCode+'/players/'+s.anonymousUserId).onDisconnect().remove().catch(()=>{});
+      }
+    }
   },
 
   saveLocal() {
@@ -4679,7 +5413,7 @@ const Game = {
         localStorage.setItem('sekolah_muslim_save', JSON.stringify({
           nickname:s.nickname, gender:s.gender, outfit:s.outfit, hat:s.hat, acc:s.acc,
           money:s.money, kelas:s.kelas, tasks:s.tasks, progress:s.progress,
-          camMode:s.camMode, camSens:s.camSens, timeCycle:s.timeCycle,
+          camMode:s.camMode, camSens:s.camSens, timeCycle:s.timeCycle, showOwnNameTag:s.showOwnNameTag !== false,
           jualanItems:s.jualanItems
         }));
       } catch(e) {}
@@ -4697,7 +5431,7 @@ const Game = {
         tasks:data.tasks||{},
         progress:data.progress||{tilawah:0,hafalan:0,menulis:0,disiplin:0,sosial:0,makan:0,kuis:0},
         camMode:data.camMode||'third', camSens:data.camSens||1.0,
-        timeCycle:data.timeCycle||'realtime',
+        timeCycle:data.timeCycle||'realtime', showOwnNameTag:data.showOwnNameTag !== false,
         jualanItems:data.jualanItems||[]
       });
     } catch(e) {}
@@ -4714,6 +5448,16 @@ window.addEventListener('beforeunload', () => {
     mabarDB.ref('rooms/' + Game.state.currentRoomCode + '/voice/' + Game.state.anonymousUserId).remove().catch(()=>{});
   }
 });
+
+window.addEventListener('pagehide', () => {
+  try {
+    const s = Game.state;
+    if (s.currentRoomCode && mabarDB && s.anonymousUserId) {
+      mabarDB.ref('rooms/' + s.currentRoomCode + '/players/' + s.anonymousUserId).remove().catch(()=>{});
+      mabarDB.ref('rooms/' + s.currentRoomCode + '/voice/' + s.anonymousUserId).remove().catch(()=>{});
+    }
+  } catch (_) {}
+});
 </script>
 
 <style>
@@ -4721,6 +5465,12 @@ window.addEventListener('beforeunload', () => {
 #fishControls button,#fishInventory button{border:2px solid #fff;border-radius:14px;padding:12px 16px;font-weight:800;background:linear-gradient(135deg,#0878c9,#13c8e8);color:#fff;box-shadow:0 4px 14px #0008}
 #fishInventory{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);display:none;gap:8px;z-index:81;pointer-events:auto}
 #fishToast{position:fixed;left:50%;top:25%;transform:translateX(-50%);display:none;background:#062a43ee;color:white;border:2px solid #4ddcff;border-radius:12px;padding:10px 16px;z-index:82;font-weight:bold;text-align:center}
+
+.auth-divider{display:flex;align-items:center;gap:12px;margin:14px 0;color:#9ca3af;font-size:11px;font-weight:800;letter-spacing:1px}
+.auth-divider:before,.auth-divider:after{content:"";height:1px;background:rgba(255,255,255,.18);flex:1}
+.google-login-btn{background:#fff!important;color:#202124!important;border:1px solid #dadce0!important;display:flex;align-items:center;justify-content:center;gap:10px;font-weight:800}
+.google-login-btn:disabled{opacity:.65}
+.google-g{font-family:Arial,sans-serif;font-size:21px;font-weight:900;color:#4285f4;background:#fff;border-radius:50%;width:25px;height:25px;display:inline-flex;align-items:center;justify-content:center}
 </style>
 <div id="fishControls"><button id="fishCast">🎣 PANCING</button></div>
 <div id="fishInventory"><button id="fishEat">🍽️ MAKAN IKAN</button><button id="fishSell">💰 JUAL IKAN</button></div>
@@ -4765,6 +5515,23 @@ window.addEventListener('beforeunload', () => {
   setInterval(updateFishingUI,500);
 })();
 </script>
+
+
+// Bersihkan avatar saat keluar halaman. onDisconnect juga terpasang di Firebase
+// sebagai fallback jika browser ditutup paksa atau koneksi internet terputus.
+if (!window.sekolahMuslimPublicPageExitCleanup) {
+  window.sekolahMuslimPublicPageExitCleanup = true;
+  const removePublicAvatar = () => {
+    try {
+      const st = window.Game && Game.state;
+      if (st && st.publicServerMode && st.currentRoomCode && window.mabarDB && st.anonymousUserId) {
+        mabarDB.ref('rooms/' + st.currentRoomCode + '/players/' + st.anonymousUserId).remove().catch(() => {});
+      }
+    } catch (e) {}
+  };
+  window.addEventListener('pagehide', removePublicAvatar);
+  window.addEventListener('beforeunload', removePublicAvatar);
+}
 
 </body>
 </html>
